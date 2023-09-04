@@ -1,18 +1,19 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_diary/model/diary_page.dart';
+import 'package:image_picker/image_picker.dart';
 
-class DiaryCard extends StatelessWidget {
-  final String _image;
-  final String _date;
-  final Function() _onTap;
+class DiaryPageCard extends StatelessWidget {
+  final DiaryPage _page;
+  final Function(DiaryPage) _onTap;
 
-  const DiaryCard({
+  const DiaryPageCard({
     super.key,
-    required String image,
-    required String date,
-    required Function() onTap,
-  }): _image = image,
-        _date = date,
-        _onTap = onTap;
+    required DiaryPage page,
+    required Function(DiaryPage) onTap,
+  }): _page = page,
+      _onTap = onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +29,11 @@ class DiaryCard extends StatelessWidget {
 
             child: InkWell(
               splashColor: Colors.blue.withAlpha(30),
-              onTap: _onTap,
+              onTap: () => _onTap(_page),
               child: Column(
                 children: [
-                  Image.asset(
-                    _image,
+                  Image.file(
+                    File(_page.image.path),
                     height: 200,
                     width: double.infinity,
                     fit: BoxFit.cover,
@@ -40,7 +41,7 @@ class DiaryCard extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(20),
                     child: Text(
-                      _date,
+                      _page.getFormattedDate(),
                       style: const TextStyle(fontSize: 20),
                     ),
                   )

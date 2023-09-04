@@ -1,4 +1,5 @@
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 class DiaryPage {
   // final int id;
@@ -29,7 +30,12 @@ class DiaryPage {
     );
   }
 
-  // Future<Diary> toDiary() async {
+  String getFormattedDate() {
+    return DateFormat('yyyy年MM月dd日').format(date);
+  }
+
+
+// Future<Diary> toDiary() async {
   //   return Diary(
   //     id: id,
   //     title: title,

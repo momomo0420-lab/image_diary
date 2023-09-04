@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:image_diary/model/diary_page.dart';
 import 'package:image_diary/model/diary_page_repository.dart';
+import 'package:image_diary/ui/show_page_list/show_page_list_body.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 /// 日記のリスト表示画面
 class ShowPageListScreen extends StatefulWidget {
   // ページ取得用リポジトリ
   final DiaryPageRepository _repository;
-  // 詳細画面への遷移処理
-  final Function() _navigateToShowDetailPage;
-  // ページ追加画面への追加処理
+  // 詳細画面への遷移
+  final Function(DiaryPage) _navigateToShowDetailPage;
+  // ページ追加画面への遷移
   final Function() _navigateToAddAddPage;
 
   ///コンストラクタ
@@ -25,9 +28,42 @@ class ShowPageListScreen extends StatefulWidget {
 }
 
 class _ShowPageListScreenState extends State<ShowPageListScreen> {
+  // 日記のページリスト
+  late final Future<List<DiaryPage>> _pageList;
+
+
+  /// 状態の初期化
+  @override
+  void initState() {
+    super.initState();
+    _pageList = _fetchPageList();
+  }
+
+  // 日記のページリスト取得
+  Future<List<DiaryPage>> _fetchPageList() async {
+    return await widget._repository.findAll();
+  }
+
   /// メイン
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(title: const Text('画像日記アプリ')),
+      body: FutureBuilder(
+        future: _pageList,
+        builder: (context, pageList) {
+          return ShowPageListBody(
+              pageList: pageList.hasData ? pageList.requireData : null,
+              onPageCard: (page) {
+                widget._navigateToShowDetailPage(page);
+              }
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => widget._navigateToAddAddPage(),
+        child: const Icon(Icons.add),
+      ),
+    );
   }
 }

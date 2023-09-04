@@ -9,16 +9,16 @@ import 'package:loader_overlay/loader_overlay.dart';
 class AddPageScreen extends StatefulWidget {
   // 日記のページ操作用リポジトリ
   final DiaryPageRepository _repository;
-  // 次の画面への遷移先
-  final Function() _navigateToNextScreen;
+  // 書き込み完了後の遷移先
+  final Function() _destinationAfterWriting;
 
   /// コンストラクタ
   const AddPageScreen({
     super.key,
     required repository,
-    required navigateToNextScreen,
+    required destinationAfterWriting,
   }): _repository = repository,
-    _navigateToNextScreen = navigateToNextScreen;
+    _destinationAfterWriting = destinationAfterWriting;
 
   @override
   State<AddPageScreen> createState() => _AddPageScreenState();
@@ -113,7 +113,7 @@ class _AddPageScreenState extends State<AddPageScreen> {
     if(!mounted) return;
     context.loaderOverlay.hide();
 
-    widget._navigateToNextScreen();
+    widget._destinationAfterWriting();
   }
 
   /// ページ登録のために必要なデータが揃っているか確認する処理

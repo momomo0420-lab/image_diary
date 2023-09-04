@@ -6,6 +6,7 @@ import 'package:image_diary/model/diary_page_repository.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
+/// 日記ページ操作用リポジトリ
 class DiaryPageRepositoryStub implements DiaryPageRepository {
   @override
   Future<List<DiaryPage>> findAll() async {
