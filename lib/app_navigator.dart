@@ -5,12 +5,14 @@ import 'package:image_diary/ui/add_page/add_page_screen.dart';
 import 'package:image_diary/ui/show_detail_page/show_detail_page_screen.dart';
 import 'package:image_diary/ui/show_page_list/show_page_list_screen.dart';
 
+/// 画像日記アプリの全画面構成
 enum ImageDiaryScreens {
   start,
   addPage,
   detailPage,
 }
 
+/// ナビゲーター
 class AppNavigator extends StatefulWidget {
   const AppNavigator({super.key});
 
