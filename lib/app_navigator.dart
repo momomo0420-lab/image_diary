@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_diary/model/diary_page.dart';
 import 'package:image_diary/model/diary_page_repository_stub.dart';
 import 'package:image_diary/ui/add_page/add_page_screen.dart';
 import 'package:image_diary/ui/show_detail_page/show_detail_page_screen.dart';
@@ -39,18 +40,18 @@ class _AppNavigatorState extends State<AppNavigator> {
             navigateToAddPage: () => Navigator.of(context).pushNamed(
                 ImageDiaryScreens.addPage.name
             ),
-            // TODO: 選択されたページを詳細画面に送れるようにする必要あり
             navigateToShowDetailPage: (page) => Navigator.of(context).pushNamed(
-                ImageDiaryScreens.detailPage.name,
+              ImageDiaryScreens.detailPage.name,
+              arguments: page
             ),
           );
         },
 
-        // TODO: 選択されたページを受け取れるようにする必要あり
         // 日記の詳細画面
         ImageDiaryScreens.detailPage.name: (BuildContext context) {
+          final page = ModalRoute.of(context)!.settings.arguments as DiaryPage;
           return ShowDetailPageScreen(
-              repository: _repository,
+              page: page,
           );
         },
 
