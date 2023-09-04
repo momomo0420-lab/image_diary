@@ -46,10 +46,7 @@ class _ShowDetailPageScreenState extends State<ShowDetailPageScreen> {
         future: _page,
         builder: (context, page) {
           return ShowDetailPageBody(
-            title: 'タイトル',
-            content: '本文',
-            date: DateTime.now(),
-            image: page.hasData ? page.requireData.image : null,
+            page: page.hasData ? page.requireData : null,
           );
         },
       ),

@@ -16,42 +16,7 @@ class DiaryPage {
     required this.image
   });
 
-  factory DiaryPage.from(
-      String title,
-      String content,
-      DateTime date,
-      XFile image
-  ) {
-    return DiaryPage(
-      title: title,
-      content: content,
-      date: date,
-      image: image
-    );
-  }
-
   String getFormattedDate() {
     return DateFormat('yyyy年MM月dd日').format(date);
   }
-
-
-// Future<Diary> toDiary() async {
-  //   return Diary(
-  //     id: id,
-  //     title: title,
-  //     content: content,
-  //     date: date.microsecondsSinceEpoch,
-  //     image: await image.readAsBytes(),
-  //   );
-  // }
-  //
-  // factory Diary.from(Diary diary) {
-  //   return Diary(
-  //     id: diary.id,
-  //     title: diary.title,
-  //     content: diary.content,
-  //     date: DateTime.fromMillisecondsSinceEpoch(diary.date),
-  //     image: XFile.fromData(diary.image),
-  //   );
-  // }
 }
