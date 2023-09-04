@@ -17,7 +17,7 @@ class AddPageBody extends StatelessWidget {
   // [書き込み]ボタンが押された場合の処理
   final Function(String title, String content, XFile? image) _onWritingButton;
 
-  // コンストラクタ
+  /// コンストラクタ
   const AddPageBody({
     super.key,
     required titleController,
@@ -31,7 +31,7 @@ class AddPageBody extends StatelessWidget {
         _onImageContainer = onImageContainer,
         _onWritingButton = onWritingButton;
 
-  // メイン
+  /// メイン
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

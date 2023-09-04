@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:image_diary/model/diary_page_repository.dart';
 import 'package:image_diary/model/diary_page_repository_stub.dart';
-import 'package:image_diary/ui/add_diary/add_page_screen.dart';
+import 'package:image_diary/ui/add_page/add_page_screen.dart';
+import 'package:image_diary/ui/show_detail_page/show_detail_page_screen.dart';
 
 enum ImageDiaryScreens {
-  add,
+  addPage,
+  showPageList,
+  detailPage,
 }
 
 class AppNavigator extends StatefulWidget {
@@ -26,9 +28,15 @@ class _AppNavigatorState extends State<AppNavigator> {
         useMaterial3: false,
       ),
       routes: <String, WidgetBuilder> {
-        // ImageDiaryScreen.start.name: (BuildContext context) => DiaryListScreen(repository: repository.requireData),
-        // ImageDiaryScreen.detail.name: (BuildContext context) => const DetailDiaryScreen(),
-        ImageDiaryScreens.add.name: (BuildContext context) {
+        // ImageDiaryScreens.start.name: (BuildContext context) => DiaryListScreen(repository: repository.requireData),
+
+        ImageDiaryScreens.detailPage.name: (BuildContext context) {
+          return ShowDetailPageScreen(
+              repository: _repository,
+          );
+        },
+
+        ImageDiaryScreens.addPage.name: (BuildContext context) {
           return AddPageScreen(
             repository: _repository,
             navigateToNextScreen: () {
@@ -39,7 +47,7 @@ class _AppNavigatorState extends State<AppNavigator> {
           );
         }
       },
-      initialRoute: ImageDiaryScreens.add.name,
+      initialRoute: ImageDiaryScreens.detailPage.name,
     );
   }
 }

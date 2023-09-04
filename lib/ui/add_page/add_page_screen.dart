@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_diary/model/diary_page_repository.dart';
 import 'package:image_diary/model/diary_page.dart';
-import 'package:image_diary/ui/add_diary/add_page_body.dart';
+import 'package:image_diary/ui/add_page/add_page_body.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
@@ -12,7 +12,7 @@ class AddPageScreen extends StatefulWidget {
   // 次の画面への遷移先
   final Function() _navigateToNextScreen;
 
-  // コンストラクタ
+  /// コンストラクタ
   const AddPageScreen({
     super.key,
     required repository,
@@ -34,7 +34,7 @@ class _AddPageScreenState extends State<AddPageScreen> {
   // 画面に表示する画像
   XFile? _image;
 
-  // メイン
+  /// メイン
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,6 +49,16 @@ class _AddPageScreenState extends State<AddPageScreen> {
         ),
       ),
     );
+  }
+
+  /// 終了処理
+  @override
+  void dispose() {
+    // 終了のタイミングでコントローラーを破棄する
+    _contentController.dispose();
+    _titleController.dispose();
+
+    super.dispose();
   }
 
   /// 画像コンテナを押下された際の処理
