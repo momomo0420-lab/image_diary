@@ -1,20 +1,20 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:image_diary/model/diary_page.dart';
+import 'package:image_diary/model/page_item.dart';
 
 /// 日記ページリスト表示画面のメイン
 class ShowPageListBody extends StatelessWidget {
   // 日記用のページリスト
-  final List<DiaryPage>?  _pageList;
+  final List<PageItem>?  _pageList;
   // ページカードを押下された際の処理
-  final Function(DiaryPage) _onPageCard;
+  final Function(PageItem) _onPageCard;
 
   /// コンストラクタ
   const ShowPageListBody({
     super.key,
-    required List<DiaryPage>? pageList,
-    required Function(DiaryPage)  onPageCard,
+    required List<PageItem>? pageList,
+    required Function(PageItem)  onPageCard,
   }): _pageList = pageList,
     _onPageCard = onPageCard;
 
@@ -54,7 +54,7 @@ class ShowPageListBody extends StatelessWidget {
   ///
   /// @param  日記のページ用データ
   /// @return カード化した日記のページ
-  Widget _loadDiaryPageCard(DiaryPage page) {
+  Widget _loadDiaryPageCard(PageItem page) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: SizedBox(

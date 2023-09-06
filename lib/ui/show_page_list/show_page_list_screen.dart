@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:image_diary/model/diary_page.dart';
-import 'package:image_diary/model/diary_page_repository.dart';
+import 'package:image_diary/model/page_item.dart';
+import 'package:image_diary/model/page_item_repository.dart';
 import 'package:image_diary/ui/show_page_list/show_page_list_body.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
 /// 日記のリスト表示画面
 class ShowPageListScreen extends StatefulWidget {
   // ページ取得用リポジトリ
-  final DiaryPageRepository _repository;
+  final PageItemRepository _repository;
   // 詳細画面への遷移
-  final Function(DiaryPage) _navigateToShowDetailPage;
+  final Function(PageItem) _navigateToShowDetailPage;
   // ページ追加画面への遷移
   final Function() _navigateToAddAddPage;
 
@@ -29,7 +29,7 @@ class ShowPageListScreen extends StatefulWidget {
 
 class _ShowPageListScreenState extends State<ShowPageListScreen> {
   // 日記のページリスト
-  late final Future<List<DiaryPage>> _pageList;
+  late final Future<List<PageItem>> _pageList;
 
 
   /// 状態の初期化
@@ -40,7 +40,7 @@ class _ShowPageListScreenState extends State<ShowPageListScreen> {
   }
 
   // 日記のページリスト取得
-  Future<List<DiaryPage>> _fetchPageList() async {
+  Future<List<PageItem>> _fetchPageList() async {
     return await widget._repository.findAll();
   }
 
@@ -49,6 +49,7 @@ class _ShowPageListScreenState extends State<ShowPageListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('画像日記アプリ')),
+      backgroundColor: Colors.limeAccent,
       body: FutureBuilder(
         future: _pageList,
         builder: (context, pageList) {

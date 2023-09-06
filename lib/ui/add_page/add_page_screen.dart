@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:image_diary/model/diary_page_repository.dart';
-import 'package:image_diary/model/diary_page.dart';
+import 'package:image_diary/model/page_item_repository.dart';
+import 'package:image_diary/model/page_item.dart';
 import 'package:image_diary/ui/add_page/add_page_body.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loader_overlay/loader_overlay.dart';
@@ -8,7 +8,7 @@ import 'package:loader_overlay/loader_overlay.dart';
 /// ページ追加用画面
 class AddPageScreen extends StatefulWidget {
   // 日記のページ操作用リポジトリ
-  final DiaryPageRepository _repository;
+  final PageItemRepository _repository;
   // 書き込み完了後の遷移先
   final Function() _destinationAfterWriting;
 
@@ -105,7 +105,12 @@ class _AddPageScreenState extends State<AddPageScreen> {
 
     // 画面を暗転後、ページの登録を行う
     context.loaderOverlay.show();
-    final page = DiaryPage(title: title, content: content, date: DateTime.now(), image: image!);
+    final page = PageItem(
+        title: title,
+        content: content,
+        date: DateTime.now(),
+        image: image!
+    );
 
     await widget._repository.insert(page);
 

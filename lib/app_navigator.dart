@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:image_diary/model/diary_page.dart';
-import 'package:image_diary/model/diary_page_repository_stub.dart';
+import 'package:image_diary/model/page_item.dart';
+import 'package:image_diary/model/page_item_repository_stub.dart';
 import 'package:image_diary/ui/add_page/add_page_screen.dart';
 import 'package:image_diary/ui/show_detail_page/show_detail_page_screen.dart';
 import 'package:image_diary/ui/show_page_list/show_page_list_screen.dart';
@@ -23,7 +23,7 @@ class AppNavigator extends StatefulWidget {
 class _AppNavigatorState extends State<AppNavigator> {
   // TODO: リポジトリは後日実装予定
   // 日記ページ操作用のリポジトリ
-  final _repository = DiaryPageRepositoryStub();
+  final _repository = PageItemRepositoryStub();
 
   /// メイン
   @override
@@ -51,7 +51,7 @@ class _AppNavigatorState extends State<AppNavigator> {
 
         // 日記の詳細画面
         ImageDiaryScreens.detailPage.name: (BuildContext context) {
-          final page = ModalRoute.of(context)!.settings.arguments as DiaryPage;
+          final page = ModalRoute.of(context)!.settings.arguments as PageItem;
           return ShowDetailPageScreen(
               page: page,
           );

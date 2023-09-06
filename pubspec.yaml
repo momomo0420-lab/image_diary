@@ -34,6 +34,8 @@ dependencies:
   loader_overlay:
   path_provider:
   intl:
+  sqflite:
+  path:
 
 
   # The following adds the Cupertino Icons font to your application.

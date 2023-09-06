@@ -1,35 +1,35 @@
 import 'dart:io';
 
 import 'package:flutter/services.dart';
-import 'package:image_diary/model/diary_page.dart';
-import 'package:image_diary/model/diary_page_repository.dart';
+import 'package:image_diary/model/page_item.dart';
+import 'package:image_diary/model/page_item_repository.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
 /// 日記ページ操作用リポジトリ
-class DiaryPageRepositoryStub implements DiaryPageRepository {
+class PageItemRepositoryStub implements PageItemRepository {
   @override
-  Future<List<DiaryPage>> findAll() async {
+  Future<List<PageItem>> findAll() async {
     await Future.delayed(const Duration(seconds: 5));
     return await _generateTestDiaryPageList();
   }
 
   @override
-  Future<DiaryPage> findBy(int id) async {
+  Future<PageItem> findBy(int id) async {
     await Future.delayed(const Duration(seconds: 5));
     return await _generateTestDiaryPage();
   }
 
   @override
-  Future<void> insert(DiaryPage page) async {
+  Future<void> insert(PageItem page) async {
     await Future.delayed(const Duration(seconds: 5));
   }
 
   /// 日記ページ用のテストデータを作成する（複数件）
   ///
   /// @return ページ用テストデータ（複数件）
-  Future<List<DiaryPage>> _generateTestDiaryPageList() async {
-    List<DiaryPage> pages = [];
+  Future<List<PageItem>> _generateTestDiaryPageList() async {
+    List<PageItem> pages = [];
 
     final path = (await getApplicationDocumentsDirectory()).path;
 
@@ -43,7 +43,7 @@ class DiaryPageRepositoryStub implements DiaryPageRepository {
       );
 
       pages.add(
-        DiaryPage(
+        PageItem(
             title: 'title: $i',
             content: 'content: $i',
             date: DateTime.now().add(Duration(days: i)),
@@ -58,7 +58,7 @@ class DiaryPageRepositoryStub implements DiaryPageRepository {
   /// 日記ページ用のテストデータを作成する
   ///
   /// @return ページ用テストデータ
-  Future<DiaryPage> _generateTestDiaryPage() async {
+  Future<PageItem> _generateTestDiaryPage() async {
     final path = (await getApplicationDocumentsDirectory()).path;
     String fileName = '1.png';
     var file = File('$path/$fileName');
@@ -68,7 +68,7 @@ class DiaryPageRepositoryStub implements DiaryPageRepository {
       byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes)
     );
 
-    return DiaryPage(
+    return PageItem(
         title: 'title',
         content: 'content',
         date: DateTime.now(),
