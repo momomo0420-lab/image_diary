@@ -1,5 +1,18 @@
+import 'dart:io';
+
+import 'package:flutter/services.dart';
 import 'package:image_diary/model/db/page_dao.dart';
 import 'package:image_diary/model/page_item.dart';
+import 'package:path_provider/path_provider.dart';
+
+final List<String> imageNamesForTest = [
+  '1.png',
+  '2.png',
+  '3.png',
+  '4.png',
+  '5.png',
+];
+
 
 class PageDaoStub implements PageDao {
   @override
@@ -8,20 +21,47 @@ class PageDaoStub implements PageDao {
     throw UnimplementedError();
   }
 
+  // TODO: implement findAll
   @override
-  Future<List<Map<String, dynamic>>> findAll() {
-    // TODO: implement findAll
-    throw UnimplementedError();
+  Future<List<Map<String, dynamic>>> findAll() async {
+    await Future.delayed(const Duration(seconds: 5));
+
+    List<Map<String, dynamic>> pageMaps = [];
+
+    final path = (await getApplicationDocumentsDirectory()).path;
+
+    int count = 0;
+    for(var imageName in imageNamesForTest) {
+      File file = File('$path/$imageName');
+
+      var byteData = await rootBundle.load('images/$imageName');
+      file.writeAsBytes(
+        byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes)
+      );
+
+      pageMaps.add(
+        {
+          PageItemColumns.title.name: 'title(dao) $count',
+          PageItemColumns.content.name: 'content(dao) $count',
+          PageItemColumns.date.name: DateTime.now().add(Duration(days: count)).millisecondsSinceEpoch,
+          PageItemColumns.image.name: await file.readAsBytes(),
+          PageItemColumns.imageName.name: imageName,
+        }
+      );
+
+      count++;
+    }
+
+    return pageMaps;
   }
 
   @override
-  Future<void> insert(Map<String, dynamic> page) {
-    // TODO: implement insert
-    throw UnimplementedError();
+  Future<void> insert(Map<String, dynamic> page) async {
+    await Future.delayed(const Duration(seconds: 5));
   }
 
   @override
-  Future<void> update(Map<String, dynamic> page) {
+  Future<void> update(Map<String, dynamic> page) async {
     // TODO: implement update
     throw UnimplementedError();
   }

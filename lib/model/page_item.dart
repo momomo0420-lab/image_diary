@@ -11,6 +11,7 @@ enum PageItemColumns {
   content,
   date,
   image,
+  imageName,
 }
 
 class PageItem {
@@ -22,12 +23,15 @@ class PageItem {
   final DateTime date;
   // 画像
   final XFile image;
+  // 画像の名前
+  final String imageName;
 
   const PageItem({
     required this.title,
     required this.content,
     required this.date,
     required this.image,
+    required this.imageName,
   });
 
   /// マップデータからページを作成する
@@ -39,13 +43,14 @@ class PageItem {
     final content = map[PageItemColumns.content.name] as String;
     final date = map[PageItemColumns.date.name] as int;
     final image = map[PageItemColumns.image.name] as Uint8List;
-    // final imageName = map[PageItemColumns.imageName.name] as String;
+    final imageName = map[PageItemColumns.imageName.name] as String;
 
     return PageItem(
       title: title,
       content: content,
       date: DateTime.fromMillisecondsSinceEpoch(date),
       image: await _convertUint8ListToXFile(image, title),
+      imageName: imageName,
     );
   }
 
@@ -73,7 +78,8 @@ class PageItem {
       PageItemColumns.title.name: title,
       PageItemColumns.content.name: content,
       PageItemColumns.date.name: date.millisecondsSinceEpoch,
-      PageItemColumns.image.name: await convertXFileToUint8List(image)
+      PageItemColumns.image.name: await _convertXFileToUint8List(image),
+      PageItemColumns.imageName.name: imageName,
     };
   }
 
@@ -81,7 +87,7 @@ class PageItem {
   ///
   /// @param 画像
   /// @return Uint8List型へ変換された画像
-  Future<Uint8List> convertXFileToUint8List(XFile image) async {
+  Future<Uint8List> _convertXFileToUint8List(XFile image) async {
     File file = File(image.path);
     List<int> bytes = await file.readAsBytes();
 

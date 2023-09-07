@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:image_diary/model/page_item_repository.dart';
 import 'package:image_diary/model/page_item.dart';
 import 'package:image_diary/ui/add_page/add_page_body.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:loader_overlay/loader_overlay.dart';
+import 'package:path/path.dart';
 
 /// ページ追加用画面
 class AddPageScreen extends StatefulWidget {
@@ -106,10 +110,11 @@ class _AddPageScreenState extends State<AddPageScreen> {
     // 画面を暗転後、ページの登録を行う
     context.loaderOverlay.show();
     final page = PageItem(
-        title: title,
-        content: content,
-        date: DateTime.now(),
-        image: image!
+      title: title,
+      content: content,
+      date: DateTime.now(),
+      image: image!,
+      imageName: generateUniqueImageNameFrom(File(image.path)),
     );
 
     await widget._repository.insert(page);
@@ -119,6 +124,13 @@ class _AddPageScreenState extends State<AddPageScreen> {
     context.loaderOverlay.hide();
 
     widget._destinationAfterWriting();
+  }
+
+  /// 一意のファイル名を作成する
+  String generateUniqueImageNameFrom(File image) {
+    final formattedDate = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
+    final imageName = basename(image.path);
+    return 'image_${formattedDate}_$imageName';
   }
 
   /// ページ登録のために必要なデータが揃っているか確認する処理
