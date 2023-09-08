@@ -127,6 +127,8 @@ class _AddPageScreenState extends State<AddPageScreen> {
   }
 
   /// 一意のファイル名を作成する
+  ///
+  /// @param 一意の名前を付けたいファイル
   String generateUniqueImageNameFrom(File image) {
     final formattedDate = DateFormat('yyyyMMdd_HHmmss').format(DateTime.now());
     final imageName = basename(image.path);

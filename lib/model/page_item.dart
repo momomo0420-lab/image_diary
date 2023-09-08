@@ -1,18 +1,10 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:image_diary/model/db/page_columns.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
-
-enum PageItemColumns {
-  id,
-  title,
-  content,
-  date,
-  image,
-  imageName,
-}
 
 class PageItem {
   // タイトル
@@ -39,11 +31,11 @@ class PageItem {
   /// @param map  マップデータ
   /// @return ページ
   static Future<PageItem> createFromMap(Map<String, dynamic> map) async {
-    final title = map[PageItemColumns.title.name] as String;
-    final content = map[PageItemColumns.content.name] as String;
-    final date = map[PageItemColumns.date.name] as int;
-    final image = map[PageItemColumns.image.name] as Uint8List;
-    final imageName = map[PageItemColumns.imageName.name] as String;
+    final title = map[PageColumns.title.column] as String;
+    final content = map[PageColumns.content.column] as String;
+    final date = map[PageColumns.date.column] as int;
+    final image = map[PageColumns.image.column] as Uint8List;
+    final imageName = map[PageColumns.imageName.column] as String;
 
     return PageItem(
       title: title,
@@ -75,11 +67,11 @@ class PageItem {
   /// @return マップデータ
   Future<Map<String, dynamic>> toMap() async {
     return {
-      PageItemColumns.title.name: title,
-      PageItemColumns.content.name: content,
-      PageItemColumns.date.name: date.millisecondsSinceEpoch,
-      PageItemColumns.image.name: await _convertXFileToUint8List(image),
-      PageItemColumns.imageName.name: imageName,
+      PageColumns.title.column: title,
+      PageColumns.content.column: content,
+      PageColumns.date.column: date.millisecondsSinceEpoch,
+      PageColumns.image.column: await _convertXFileToUint8List(image),
+      PageColumns.imageName.column: imageName,
     };
   }
 

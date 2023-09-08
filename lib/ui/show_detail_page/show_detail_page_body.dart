@@ -20,12 +20,6 @@ class ShowDetailPageBody extends StatelessWidget {
     return Center(
       child: Column(
         children: [
-          // Container(
-          //   height: 200,
-          //   width: double.infinity,
-          //   color: Colors.grey,
-          //   child: Image.file(File(_page.image.path)),
-          // ),
           Image.file(File(_page.image.path)),
           const SizedBox(height: 16,),
 

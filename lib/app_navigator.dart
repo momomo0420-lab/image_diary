@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:image_diary/model/db/page_dao_stub.dart';
+import 'package:image_diary/model/db/page_dao_impl.dart';
 import 'package:image_diary/model/page_item.dart';
 import 'package:image_diary/model/page_item_repository_impl.dart';
-import 'package:image_diary/model/page_item_repository_stub.dart';
 import 'package:image_diary/ui/add_page/add_page_screen.dart';
 import 'package:image_diary/ui/show_detail_page/show_detail_page_screen.dart';
 import 'package:image_diary/ui/show_page_list/show_page_list_screen.dart';
@@ -25,7 +24,7 @@ class AppNavigator extends StatefulWidget {
 class _AppNavigatorState extends State<AppNavigator> {
   // TODO: リポジトリは後日実装予定
   // 日記ページ操作用のリポジトリ
-  final _repository = PageItemRepositoryImpl(dao: PageDaoStub());
+  final _repository = PageItemRepositoryImpl(dao: PageDaoImpl());
 
   /// メイン
   @override
@@ -63,7 +62,11 @@ class _AppNavigatorState extends State<AppNavigator> {
         ImageDiaryScreens.addPage.name: (BuildContext context) {
           return AddPageScreen(
             repository: _repository,
-            destinationAfterWriting: () => Navigator.of(context).pop()
+            // destinationAfterWriting: () => Navigator.of(context).pop()
+            destinationAfterWriting: () => Navigator.of(context).pushNamedAndRemoveUntil(
+              ImageDiaryScreens.start.name,
+              (_) => false
+            )
           );
         }
       },
