@@ -71,7 +71,10 @@ class _AddPageScreenState extends State<AddPageScreen> {
   Future<void> _onImageContainer(BuildContext context) async {
     // 画面を暗転し、ユーザーに画像を選択してもらう
     context.loaderOverlay.show();
-    final pickedFile = await _imagePicker.pickImage(source: ImageSource.gallery);
+    final pickedFile = await _imagePicker.pickImage(
+      source: ImageSource.gallery,
+      imageQuality: 50
+    );
 
     // ユーザーが画面選択後、画面の暗転を解除する
     if(!mounted) return;

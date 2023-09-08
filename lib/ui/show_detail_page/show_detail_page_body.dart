@@ -17,22 +17,27 @@ class ShowDetailPageBody extends StatelessWidget {
   /// メイン
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          Image.file(File(_page.image.path)),
-          const SizedBox(height: 16,),
+    return SingleChildScrollView(
+      child: Center(
+        child: Column(
+          children: [
+            Image.file(
+              File(_page.image.path),
+              width: double.infinity,
+            ),
+            const SizedBox(height: 16,),
 
-          Text(_page.title, style: const TextStyle(fontSize: 40)),
-          const SizedBox(height: 16,),
+            Text(_page.title, style: const TextStyle(fontSize: 40)),
+            const SizedBox(height: 16,),
 
-          Text(_page.getFormattedDate(), style: const TextStyle(fontSize: 30)),
-          const SizedBox(height: 16,),
+            Text(_page.getFormattedDate(), style: const TextStyle(fontSize: 30)),
+            const SizedBox(height: 16,),
 
-          Text(_page.content, style: const TextStyle(fontSize: 30)),
-          const SizedBox(height: 16,),
-        ],
-      )
+            Text(_page.content, style: const TextStyle(fontSize: 30)),
+            const SizedBox(height: 16,),
+          ],
+        )
+      ),
     );
   }
 }

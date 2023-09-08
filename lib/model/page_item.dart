@@ -41,7 +41,7 @@ class PageItem {
       title: title,
       content: content,
       date: DateTime.fromMillisecondsSinceEpoch(date),
-      image: await _convertUint8ListToXFile(image, title),
+      image: await _convertUint8ListToXFile(image, imageName),
       imageName: imageName,
     );
   }
