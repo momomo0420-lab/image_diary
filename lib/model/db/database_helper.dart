@@ -15,12 +15,12 @@ class DatabaseHelper {
   // データベース
   static Database? _db;
   Future<Database> get db async {
-    // データベースの初期化が完了しているなら現在の_dbを返却
+    // 初期化が完了しているなら保持しているデータベースを返却
     if(_db != null) {
       return _db!;
     }
 
-    // データベースの初期化を行い、_dbを返却
+    // 初期化を行い、データベースを返却
     final databasesPath = await getDatabasesPath();
     final path = join(databasesPath, databaseName);
     _db = await openDatabase(
@@ -32,6 +32,10 @@ class DatabaseHelper {
     return _db!;
   }
 
+  /// テーブル作成
+  ///
+  /// @param データベース
+  /// @param バージョン
   Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
       CREATE TABLE $tableName (

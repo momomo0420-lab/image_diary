@@ -62,7 +62,6 @@ class _AppNavigatorState extends State<AppNavigator> {
         ImageDiaryScreens.addPage.name: (BuildContext context) {
           return AddPageScreen(
             repository: _repository,
-            // destinationAfterWriting: () => Navigator.of(context).pop()
             destinationAfterWriting: () => Navigator.of(context).pushNamedAndRemoveUntil(
               ImageDiaryScreens.start.name,
               (_) => false
