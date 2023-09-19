@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_diary/model/db/page_dao_impl.dart';
-import 'package:image_diary/model/page_item.dart';
 import 'package:image_diary/model/page_item_repository_impl.dart';
+import 'package:image_diary/model/page_model.dart';
 import 'package:image_diary/ui/add_page/add_page_screen.dart';
 import 'package:image_diary/ui/show_detail_page/show_detail_page_screen.dart';
 import 'package:image_diary/ui/show_page_list/show_page_list_screen.dart';
@@ -52,7 +52,7 @@ class _AppNavigatorState extends State<AppNavigator> {
 
         // 日記の詳細画面
         ImageDiaryScreens.detailPage.name: (BuildContext context) {
-          final page = ModalRoute.of(context)!.settings.arguments as PageItem;
+          final page = ModalRoute.of(context)!.settings.arguments as PageModel;
           return ShowDetailPageScreen(
               page: page,
           );

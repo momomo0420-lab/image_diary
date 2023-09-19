@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:image_diary/model/db/database_helper.dart';
 import 'package:image_diary/model/db/page_dao.dart';
 import 'package:sqflite/sqflite.dart';
@@ -21,11 +22,13 @@ class PageDaoImpl implements PageDao {
   @override
   Future<void> insert(Map<String, dynamic> page) async {
     final db = await dbHelper.db;
-    await db.insert(
+    final id = await db.insert(
       DatabaseHelper.tableName,
       page,
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+
+    debugPrint('id: $id');
   }
 
   @override

@@ -1,5 +1,6 @@
 import 'package:image_diary/model/db/page_dao.dart';
 import 'package:image_diary/model/page_item.dart';
+import 'package:image_diary/model/page_model.dart';
 import 'package:image_diary/model/page_item_repository.dart';
 
 /// ページ操作用のリポジトリ
@@ -12,14 +13,14 @@ class PageItemRepositoryImpl implements PageItemRepository {
   }): _dao = dao;
 
   @override
-  Future<List<PageItem>> findAll() async {
+  Future<List<PageModel>> findAll() async {
     final maps = await _dao.findAll();
 
     // MapでDAOから取得される為、PageItem（List）に変換する
-    final List<PageItem> pageList = [];
+    final List<PageModel> pageList = [];
 
     for (var map in maps) {
-      final page = await PageItem.createFromMap(map);
+      final page = PageModel.fromJson(map);
       pageList.add(page);
     }
 
@@ -27,14 +28,14 @@ class PageItemRepositoryImpl implements PageItemRepository {
   }
 
   @override
-  Future<PageItem> findBy(int id) async {
+  Future<PageModel> findBy(int id) async {
     // TODO: implement findBy
     throw UnimplementedError();
   }
 
   @override
-  Future<void> insert(PageItem page) async {
-    final map = await page.toMap();
+  Future<void> insert(PageModel page) async {
+    final map = page.toJson();
     await _dao.insert(map);
   }
 }

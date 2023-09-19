@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:image_diary/model/page_item.dart';
 import 'package:image_diary/model/page_item_repository.dart';
+import 'package:image_diary/model/page_model.dart';
 import 'package:image_diary/ui/show_page_list/show_page_list_body.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
@@ -9,7 +10,7 @@ class ShowPageListScreen extends StatefulWidget {
   // ページ取得用リポジトリ
   final PageItemRepository _repository;
   // 詳細画面への遷移
-  final Function(PageItem) _navigateToShowDetailPage;
+  final Function(PageModel) _navigateToShowDetailPage;
   // ページ追加画面への遷移
   final Function() _navigateToAddAddPage;
 
@@ -29,7 +30,7 @@ class ShowPageListScreen extends StatefulWidget {
 
 class _ShowPageListScreenState extends State<ShowPageListScreen> {
   // 日記のページリスト
-  late final Future<List<PageItem>> _pageList;
+  late final Future<List<PageModel>> _pageList;
 
 
   /// 状態の初期化
@@ -40,8 +41,10 @@ class _ShowPageListScreenState extends State<ShowPageListScreen> {
   }
 
   // 日記のページリスト取得
-  Future<List<PageItem>> _fetchPageList() async {
-    return await widget._repository.findAll();
+  Future<List<PageModel>> _fetchPageList() async {
+    final list = await widget._repository.findAll();
+
+    return list;
   }
 
   /// メイン

@@ -1,17 +1,19 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_diary/model/page_item.dart';
+import 'package:image_diary/model/page_model.dart';
 
 /// 詳細画面のメイン
 class ShowDetailPageBody extends StatelessWidget {
   // 日記のページデータ
-  final PageItem _page;
+  final PageModel _page;
 
   /// コンストラクタ
   const ShowDetailPageBody({
     super.key,
-    required PageItem page,
+    required PageModel page,
   }): _page = page;
 
   /// メイン
@@ -21,8 +23,8 @@ class ShowDetailPageBody extends StatelessWidget {
       child: Center(
         child: Column(
           children: [
-            Image.file(
-              File(_page.image.path),
+            Image.memory(
+              Uint8List.fromList(_page.image),
               width: double.infinity,
             ),
             const SizedBox(height: 16,),
