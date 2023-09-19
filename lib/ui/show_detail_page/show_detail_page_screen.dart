@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:image_diary/model/page_item.dart';
+import 'package:image_diary/model/page_model.dart';
 import 'package:image_diary/ui/show_detail_page/show_detail_page_body.dart';
 
 /// 日記の詳細画面
 class ShowDetailPageScreen extends StatefulWidget {
-  final PageItem _page;
+  final PageModel _page;
 
   /// コンストラクタ
   const ShowDetailPageScreen({
     super.key,
-    required PageItem page,
+    required PageModel page,
   }): _page = page;
 
   @override

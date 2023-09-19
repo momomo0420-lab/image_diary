@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:image_diary/model/page_item_repository.dart';
-import 'package:image_diary/model/page_item.dart';
+import 'package:image_diary/model/page_repository.dart';
+import 'package:image_diary/model/page_model.dart';
 import 'package:image_diary/ui/add_page/add_page_body.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
@@ -110,14 +110,16 @@ class _AddPageScreenState extends State<AddPageScreen> {
       return;
     }
 
+    final List<int> imageBytes = await image?.readAsBytes() ?? [];
+
     // 画面を暗転後、ページの登録を行う
     context.loaderOverlay.show();
-    final page = PageItem(
+    final page = PageModel(
       title: title,
       content: content,
-      date: DateTime.now(),
-      image: image!,
-      imageName: generateUniqueImageNameFrom(File(image.path)),
+      date: DateTime.now().millisecondsSinceEpoch,
+      image: imageBytes,
+      imageName: generateUniqueImageNameFrom(File(image?.path ?? "no_name")),
     );
 
     await widget._repository.insert(page);
