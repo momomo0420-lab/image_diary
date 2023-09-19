@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:image_diary/model/page_item.dart';
 import 'package:image_diary/model/page_model.dart';
 import 'package:image_diary/ui/show_detail_page/show_detail_page_body.dart';
 

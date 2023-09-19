@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:image_diary/model/page_item.dart';
-import 'package:image_diary/model/page_item_repository.dart';
+import 'package:image_diary/model/page_repository.dart';
 import 'package:image_diary/model/page_model.dart';
 import 'package:image_diary/ui/show_page_list/show_page_list_body.dart';
-import 'package:loader_overlay/loader_overlay.dart';
 
 /// 日記のリスト表示画面
 class ShowPageListScreen extends StatefulWidget {

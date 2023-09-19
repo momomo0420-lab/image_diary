@@ -1,8 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:image_diary/model/page_item_repository.dart';
-import 'package:image_diary/model/page_item.dart';
+import 'package:image_diary/model/page_repository.dart';
 import 'package:image_diary/model/page_model.dart';
 import 'package:image_diary/ui/add_page/add_page_body.dart';
 import 'package:image_picker/image_picker.dart';

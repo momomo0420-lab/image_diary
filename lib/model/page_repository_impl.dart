@@ -1,7 +1,6 @@
 import 'package:image_diary/model/db/page_dao.dart';
-import 'package:image_diary/model/page_item.dart';
+import 'package:image_diary/model/page_repository.dart';
 import 'package:image_diary/model/page_model.dart';
-import 'package:image_diary/model/page_item_repository.dart';
 
 /// ページ操作用のリポジトリ
 class PageItemRepositoryImpl implements PageItemRepository {
