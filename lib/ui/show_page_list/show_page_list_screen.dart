@@ -40,6 +40,9 @@ class ShowPageListScreen extends ConsumerWidget {
     );
   }
 
+  /// ページリストの取得が完了した場合の画面
+  ///
+  /// @return pageList  ページリスト
   Widget onFetchPageListSuccessful(List<PageModel> pageList) {
     return ShowPageListBody(
         pageList: pageList,
@@ -47,14 +50,15 @@ class ShowPageListScreen extends ConsumerWidget {
     );
   }
 
+  /// ページリストの取得が失敗した場合の画面
   Widget onFetchPageListFailed() {
     return const Text('データの取得に失敗しました');
   }
 
+  /// ページリストの取得中の画面
   Widget onFetchPageListLoading() {
     return const Text('Now Loading...');
   }
-
 }
 
 

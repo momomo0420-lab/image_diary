@@ -1,4 +1,3 @@
-import 'package:cross_file/src/types/interface.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_diary/ui/add_page/add_page_body.dart';

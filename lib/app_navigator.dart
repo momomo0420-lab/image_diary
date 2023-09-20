@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_diary/app_container.dart';
-import 'package:image_diary/model/db/page_dao_impl.dart';
-import 'package:image_diary/model/page_repository_impl.dart';
 import 'package:image_diary/model/page_model.dart';
 import 'package:image_diary/ui/add_page/add_page_screen.dart';
 import 'package:image_diary/ui/show_detail_page/show_detail_page_screen.dart';
