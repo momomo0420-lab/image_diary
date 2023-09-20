@@ -6,14 +6,14 @@ import 'package:image_diary/model/page_model.dart';
 /// 日記ページリスト表示画面のメイン
 class ShowPageListBody extends StatelessWidget {
   // 日記用のページリスト
-  final List<PageModel>?  _pageList;
+  final List<PageModel>  _pageList;
   // ページカードを押下された際の処理
   final Function(PageModel) _onPageCard;
 
   /// コンストラクタ
   const ShowPageListBody({
     super.key,
-    required List<PageModel>? pageList,
+    required List<PageModel> pageList,
     required Function(PageModel)  onPageCard,
   }): _pageList = pageList,
     _onPageCard = onPageCard;
@@ -21,19 +21,6 @@ class ShowPageListBody extends StatelessWidget {
   /// メイン
   @override
   Widget build(BuildContext context) {
-    return Center(child: _decideDisplayingWidget());
-  }
-
-  /// 画面に表示する内容を決定する
-  ///
-  /// @return ページリストが無い or 読み込みが完了していない場合  [Now Loading...]を表示するテキストを返却
-  ///         ページリストがある場合　カードに変換後、リスト化し返却
-  Widget _decideDisplayingWidget() {
-    // 画面に表示するに内容があるか確認し、無ければ表示するテキストを返却する
-    if(_pageList == null) {
-      return const Text('Now Loading...');
-    }
-
     // 表示する内容を1件ずつカード化し、リストに保存する
     List<Widget> diaryPageCardList = [];
     for(var page in _pageList!) {

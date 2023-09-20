@@ -22,13 +22,8 @@ class PageModel with _$PageModel {
     @Default(0)
     int date,
     // 画像
-    // @ImageConverter()
     @Default([])
     List<int> image,
-    // 画像の名前
-    @Default('')
-    @JsonKey(name: 'image_name')
-    String imageName,
   }) = _PageModel;
 
   factory PageModel.fromJson(Map<String, dynamic> json) => _$PageModelFromJson(json);

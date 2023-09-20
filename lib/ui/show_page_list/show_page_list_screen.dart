@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:image_diary/model/page_repository.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_diary/model/page_model.dart';
 import 'package:image_diary/ui/show_page_list/show_page_list_body.dart';
+import 'package:image_diary/ui/show_page_list/show_page_list_view_model.dart';
 
 /// 日記のリスト表示画面
-class ShowPageListScreen extends StatefulWidget {
-  // ページ取得用リポジトリ
-  final PageItemRepository _repository;
+class ShowPageListScreen extends ConsumerWidget {
   // 詳細画面への遷移
   final Function(PageModel) _navigateToShowDetailPage;
   // ページ追加画面への遷移
@@ -15,57 +14,51 @@ class ShowPageListScreen extends StatefulWidget {
   ///コンストラクタ
   const ShowPageListScreen({
     super.key,
-    required repository,
     required navigateToShowDetailPage,
     required navigateToAddPage,
-  }): _repository = repository,
-    _navigateToShowDetailPage = navigateToShowDetailPage,
+  }): _navigateToShowDetailPage = navigateToShowDetailPage,
     _navigateToAddAddPage = navigateToAddPage;
 
-  @override
-  State<ShowPageListScreen> createState() => _ShowPageListScreenState();
-}
-
-class _ShowPageListScreenState extends State<ShowPageListScreen> {
-  // 日記のページリスト
-  late final Future<List<PageModel>> _pageList;
-
-
-  /// 状態の初期化
-  @override
-  void initState() {
-    super.initState();
-    _pageList = _fetchPageList();
-  }
-
-  // 日記のページリスト取得
-  Future<List<PageModel>> _fetchPageList() async {
-    final list = await widget._repository.findAll();
-
-    return list;
-  }
 
   /// メイン
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(showPageListViewModelProvider);
+
     return Scaffold(
       appBar: AppBar(title: const Text('画像日記アプリ')),
       backgroundColor: Colors.limeAccent,
-      body: FutureBuilder(
-        future: _pageList,
-        builder: (context, pageList) {
-          return ShowPageListBody(
-              pageList: pageList.hasData ? pageList.requireData : null,
-              onPageCard: (page) {
-                widget._navigateToShowDetailPage(page);
-              }
-          );
-        },
+      body: state.when(
+          data: (state) => onFetchPageListSuccessful(state.pageList),
+          error: (error, stack) => onFetchPageListFailed(),
+          loading: () => onFetchPageListLoading(),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => widget._navigateToAddAddPage(),
+        onPressed: () => _navigateToAddAddPage(),
         child: const Icon(Icons.add),
       ),
     );
   }
+
+  /// ページリストの取得が完了した場合の画面
+  ///
+  /// @return pageList  ページリスト
+  Widget onFetchPageListSuccessful(List<PageModel> pageList) {
+    return ShowPageListBody(
+        pageList: pageList,
+        onPageCard: (page) => _navigateToShowDetailPage(page),
+    );
+  }
+
+  /// ページリストの取得が失敗した場合の画面
+  Widget onFetchPageListFailed() {
+    return const Text('データの取得に失敗しました');
+  }
+
+  /// ページリストの取得中の画面
+  Widget onFetchPageListLoading() {
+    return const Text('Now Loading...');
+  }
 }
+
+

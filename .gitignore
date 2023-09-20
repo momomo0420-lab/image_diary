@@ -44,3 +44,10 @@ app.*.map.json
 /android/app/release
 /lib/model/page_model.freezed.dart
 /lib/model/page_model.g.dart
+/lib/app_container.g.dart
+/lib/ui/show_page_list/show_page_list_view_model.g.dart
+/lib/ui/show_page_list/show_page_list_view_model_state.freezed.dart
+/lib/ui/add_page/add_page_view_model.g.dart
+/lib/ui/add_page/add_page_view_model_state.freezed.dart
+/lib/ui/show_detail_page/show_detail_page_view_mode_state.freezed.dart
+/lib/ui/show_detail_page/show_detail_page_view_model.g.dart
