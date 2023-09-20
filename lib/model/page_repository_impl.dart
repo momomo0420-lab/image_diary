@@ -3,11 +3,11 @@ import 'package:image_diary/model/page_repository.dart';
 import 'package:image_diary/model/page_model.dart';
 
 /// ページ操作用のリポジトリ
-class PageItemRepositoryImpl implements PageItemRepository {
+class PageRepositoryImpl implements PageRepository {
   final PageDao _dao;
 
   /// コンストラクタ
-  const PageItemRepositoryImpl({
+  const PageRepositoryImpl({
     required PageDao dao
   }): _dao = dao;
 

@@ -14,16 +14,16 @@ class AddPageBody extends StatelessWidget {
   // 画像部分が押された場合の処理
   final Function() _onImageContainer;
   // [書き込み]ボタンが押された場合の処理
-  final Function(String title, String content, XFile? image) _onWritingButton;
+  final Function() _onWritingButton;
 
   /// コンストラクタ
   const AddPageBody({
     super.key,
-    required titleController,
-    required contentController,
-    required image,
-    required onImageContainer,
-    required onWritingButton,
+    required TextEditingController titleController,
+    required TextEditingController contentController,
+    required XFile? image,
+    required Function() onImageContainer,
+    required Function() onWritingButton,
   }): _titleController = titleController,
         _contentController = contentController,
         _image = image,
@@ -58,13 +58,7 @@ class AddPageBody extends StatelessWidget {
                   const SizedBox(width: 20,),
 
                   ElevatedButton(
-                    onPressed: () {
-                      _onWritingButton(
-                        _titleController.text,
-                        _contentController.text,
-                        _image
-                      );
-                    },
+                    onPressed: () => _onWritingButton(),
                     child: const Text('書き込む'),
                   ),
                 ],
