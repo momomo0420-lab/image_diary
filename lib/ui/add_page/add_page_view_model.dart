@@ -20,7 +20,7 @@ class AddPageViewModel extends _$AddPageViewModel {
   }
 
   /// 端末に存在する画像を選択し、取得する。
-  Future<void> selectImage() async {
+  Future<void> pickImage() async {
     final image = await state.imagePicker.pickImage(
         source: ImageSource.gallery,
         imageQuality: 50
@@ -46,6 +46,21 @@ class AddPageViewModel extends _$AddPageViewModel {
     return result;
   }
 
+  /// ページを登録する
+  Future<void> addPage() async {
+    final bytes = await _convertImageToBytes();
+
+    final page = PageModel(
+      title: state.titleController.text,
+      content: state.contentController.text,
+      date: DateTime.now().millisecondsSinceEpoch,
+      image: bytes,
+    );
+
+    final repository = ref.read(pageRepositoryProvider);
+    repository.insert(page);
+  }
+
   /// 画像をバイトデータに変換し、返却する
   ///
   /// @return バイトデータに変換した画像
@@ -56,20 +71,5 @@ class AddPageViewModel extends _$AddPageViewModel {
     final bytes = state.image!.readAsBytes();
 
     return bytes;
-  }
-
-  /// ページを登録する
-  Future<void> registerPage() async {
-    final bytesImage = await _convertImageToBytes();
-
-    final page = PageModel(
-      title: state.titleController.text,
-      content: state.contentController.text,
-      date: DateTime.now().millisecondsSinceEpoch,
-      image: bytesImage,
-    );
-
-    final repository = ref.read(pageRepositoryProvider);
-    repository.insert(page);
   }
 }

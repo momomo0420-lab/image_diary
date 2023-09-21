@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_diary/model/page_model.dart';
 import 'package:image_diary/ui/add_page/add_page_screen.dart';
 import 'package:image_diary/ui/show_detail_page/show_detail_page_screen.dart';
 import 'package:image_diary/ui/show_page_list/show_page_list_screen.dart';
 
 /// 画像日記アプリの全画面構成
 enum ImageDiaryScreens {
-  start,
-  addPage,
-  detailPage,
+  start('/start'),
+  addPage('/add_page'),
+  detailPage('/detail_page'),
+  ;
+
+  final String screen;
+
+  const ImageDiaryScreens(this.screen);
 }
 
 /// ナビゲーター
-class AppNavigator extends ConsumerWidget {
+class AppNavigator extends StatelessWidget {
   const AppNavigator({super.key});
-
 
 /// メイン
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return MaterialApp(
       title: '画像日記アプリ',
       theme: ThemeData(
@@ -28,37 +30,34 @@ class AppNavigator extends ConsumerWidget {
       ),
       routes: <String, WidgetBuilder> {
         // スタート画面
-        ImageDiaryScreens.start.name: (BuildContext context) {
+        ImageDiaryScreens.start.screen: (BuildContext context) {
           return ShowPageListScreen(
             navigateToAddPage: () => Navigator.of(context).pushNamed(
-                ImageDiaryScreens.addPage.name
+                ImageDiaryScreens.addPage.screen
             ),
             navigateToShowDetailPage: (page) => Navigator.of(context).pushNamed(
-              ImageDiaryScreens.detailPage.name,
+              ImageDiaryScreens.detailPage.screen,
               arguments: page
             ),
           );
         },
 
         // 日記の詳細画面
-        ImageDiaryScreens.detailPage.name: (BuildContext context) {
-          final page = ModalRoute.of(context)!.settings.arguments as PageModel;
-          return ShowDetailPageScreen(
-              page: page,
-          );
+        ImageDiaryScreens.detailPage.screen: (BuildContext context) {
+          return const ShowDetailPageScreen();
         },
 
         // ページ追加用画面
-        ImageDiaryScreens.addPage.name: (BuildContext context) {
+        ImageDiaryScreens.addPage.screen: (BuildContext context) {
           return AddPageScreen(
             destinationAfterWriting: () => Navigator.of(context).pushNamedAndRemoveUntil(
-              ImageDiaryScreens.start.name,
+              ImageDiaryScreens.start.screen,
               (_) => false
             )
           );
         }
       },
-      initialRoute: ImageDiaryScreens.start.name,
+      initialRoute: ImageDiaryScreens.start.screen,
     );
   }
 }

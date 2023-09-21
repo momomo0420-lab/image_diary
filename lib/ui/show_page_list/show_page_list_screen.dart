@@ -23,13 +23,18 @@ class ShowPageListScreen extends ConsumerWidget {
   /// メイン
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    debugPrint('ShowPageListScreen: build start');
+
     final state = ref.watch(showPageListViewModelProvider);
+    // final viewModel = ref.read(showPageListViewModelProvider.notifier);
+    // viewModel.loadPageList();
 
     return Scaffold(
       appBar: AppBar(title: const Text('画像日記アプリ')),
       backgroundColor: Colors.limeAccent,
+      // body: onFetchPageListSuccessful(state.pageList),
       body: state.when(
-          data: (state) => onFetchPageListSuccessful(state.pageList),
+          data: (state) => onFetchPageListSuccessful(ref, state.pageList),
           error: (error, stack) => onFetchPageListFailed(),
           loading: () => onFetchPageListLoading(),
       ),
@@ -43,11 +48,21 @@ class ShowPageListScreen extends ConsumerWidget {
   /// ページリストの取得が完了した場合の画面
   ///
   /// @return pageList  ページリスト
-  Widget onFetchPageListSuccessful(List<PageModel> pageList) {
+  Widget onFetchPageListSuccessful(
+      WidgetRef ref,
+      List<PageModel> pageList
+  ) {
     return ShowPageListBody(
         pageList: pageList,
-        onPageCard: (page) => _navigateToShowDetailPage(page),
+        onPageCard: (page) {
+          ref.refresh(showPageListViewModelProvider);
+          _navigateToShowDetailPage(page);
+        },
     );
+    // return ShowPageListBody(
+    //   pageList: pageList,
+    //   onPageCard: (page) => _navigateToShowDetailPage(page),
+    // );
   }
 
   /// ページリストの取得が失敗した場合の画面

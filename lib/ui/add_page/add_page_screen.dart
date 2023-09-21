@@ -43,7 +43,7 @@ class AddPageScreen extends ConsumerWidget {
       WidgetRef ref
   ) async {
     final viewModel = ref.read(addPageViewModelProvider.notifier);
-    await viewModel.selectImage();
+    await viewModel.pickImage();
   }
 
   /// [書き込み]ボタンを押下された際の処理
@@ -65,7 +65,7 @@ class AddPageScreen extends ConsumerWidget {
     }
 
     // ページを登録し、次の画面へ遷移
-    await viewModel.registerPage();
+    await viewModel.addPage();
     _destinationAfterWriting();
   }
 }

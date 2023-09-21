@@ -39,6 +39,8 @@ dependencies:
   flutter_riverpod:
   riverpod_annotation:
   freezed:
+  freezed_annotation:
+  json_annotation:
 
 
   # The following adds the Cupertino Icons font to your application.
