@@ -23,7 +23,7 @@ class ShowPageListBody extends StatelessWidget {
   Widget build(BuildContext context) {
     // 表示する内容を1件ずつカード化し、リストに保存する
     List<Widget> diaryPageCardList = [];
-    for(var page in _pageList!) {
+    for(var page in _pageList) {
       diaryPageCardList.add(
         _loadDiaryPageCard(page)
       );

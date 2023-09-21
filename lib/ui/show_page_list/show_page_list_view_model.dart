@@ -16,11 +16,4 @@ class ShowPageListViewModel extends _$ShowPageListViewModel {
 
     return ShowPageListViewModelState(pageList: pageList);
   }
-
-  // Future<void> loadPageList() async {
-  //   final repository = ref.watch(pageRepositoryProvider);
-  //   final pageList = await repository.findAll();
-  //
-  //   state = state.copyWith(pageList: pageList);
-  // }
 }

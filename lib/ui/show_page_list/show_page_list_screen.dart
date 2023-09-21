@@ -19,27 +19,25 @@ class ShowPageListScreen extends ConsumerWidget {
   }): _navigateToShowDetailPage = navigateToShowDetailPage,
     _navigateToAddAddPage = navigateToAddPage;
 
-
   /// メイン
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     debugPrint('ShowPageListScreen: build start');
 
     final state = ref.watch(showPageListViewModelProvider);
-    // final viewModel = ref.read(showPageListViewModelProvider.notifier);
-    // viewModel.loadPageList();
 
     return Scaffold(
       appBar: AppBar(title: const Text('画像日記アプリ')),
       backgroundColor: Colors.limeAccent,
-      // body: onFetchPageListSuccessful(state.pageList),
       body: state.when(
-          data: (state) => onFetchPageListSuccessful(ref, state.pageList),
+          data: (state) => onFetchPageListSuccessful(state.pageList),
           error: (error, stack) => onFetchPageListFailed(),
           loading: () => onFetchPageListLoading(),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _navigateToAddAddPage(),
+        onPressed: () {
+          _navigateToAddAddPage();
+        },
         child: const Icon(Icons.add),
       ),
     );
@@ -49,16 +47,8 @@ class ShowPageListScreen extends ConsumerWidget {
   ///
   /// @return pageList  ページリスト
   Widget onFetchPageListSuccessful(
-      WidgetRef ref,
       List<PageModel> pageList
   ) {
-    // return ShowPageListBody(
-    //     pageList: pageList,
-    //     onPageCard: (page) {
-    //       ref.refresh(showPageListViewModelProvider);
-    //       _navigateToShowDetailPage(page);
-    //     },
-    // );
     return ShowPageListBody(
       pageList: pageList,
       onPageCard: (page) => _navigateToShowDetailPage(page),
