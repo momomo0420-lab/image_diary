@@ -52,17 +52,17 @@ class ShowPageListScreen extends ConsumerWidget {
       WidgetRef ref,
       List<PageModel> pageList
   ) {
-    return ShowPageListBody(
-        pageList: pageList,
-        onPageCard: (page) {
-          ref.refresh(showPageListViewModelProvider);
-          _navigateToShowDetailPage(page);
-        },
-    );
     // return ShowPageListBody(
-    //   pageList: pageList,
-    //   onPageCard: (page) => _navigateToShowDetailPage(page),
+    //     pageList: pageList,
+    //     onPageCard: (page) {
+    //       ref.refresh(showPageListViewModelProvider);
+    //       _navigateToShowDetailPage(page);
+    //     },
     // );
+    return ShowPageListBody(
+      pageList: pageList,
+      onPageCard: (page) => _navigateToShowDetailPage(page),
+    );
   }
 
   /// ページリストの取得が失敗した場合の画面
