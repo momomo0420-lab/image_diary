@@ -65,10 +65,9 @@ class AddPageScreen extends ConsumerWidget {
       return;
     }
 
-    // ページを登録し、次の画面へ遷移
+    // ページを登録し、遷移後のページリストを更新した後、次の画面へ遷移
     await viewModel.addPage();
 
-    // 遷移後のページリストを更新する
     final showPageListViewModel = ref.read(showPageListViewModelProvider.notifier);
     await showPageListViewModel.loadPageList();
 
