@@ -8,12 +8,18 @@ part 'show_page_list_view_model.g.dart';
 @riverpod
 class ShowPageListViewModel extends _$ShowPageListViewModel {
   @override
-  Future<ShowPageListViewModelState> build() async {
+  ShowPageListViewModelState build() {
     debugPrint('ShowPageListViewModel: build start');
 
+    loadPageList();
+
+    return const ShowPageListViewModelState(pageList: null);
+  }
+
+  Future<void> loadPageList() async {
     final repository = ref.read(pageRepositoryProvider);
     final pageList = await repository.findAll();
 
-    return ShowPageListViewModelState(pageList: pageList);
+    state = state.copyWith(pageList: pageList);
   }
 }

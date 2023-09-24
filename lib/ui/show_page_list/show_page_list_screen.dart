@@ -29,11 +29,7 @@ class ShowPageListScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('画像日記アプリ')),
       backgroundColor: Colors.limeAccent,
-      body: state.when(
-          data: (state) => onFetchPageListSuccessful(state.pageList),
-          error: (error, stack) => onFetchPageListFailed(),
-          loading: () => onFetchPageListLoading(),
-      ),
+      body: showPageListOrLoading(state.pageList),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           _navigateToAddAddPage();
@@ -43,26 +39,20 @@ class ShowPageListScreen extends ConsumerWidget {
     );
   }
 
-  /// ページリストの取得が完了した場合の画面
+  /// ページリストの取得に応じた画面表示
   ///
   /// @return pageList  ページリスト
-  Widget onFetchPageListSuccessful(
-      List<PageModel> pageList
+  Widget showPageListOrLoading(
+      List<PageModel>? pageList
   ) {
+    if(pageList == null) {
+      return const Center(child: Text('Now Loading...'));
+    }
+
     return ShowPageListBody(
       pageList: pageList,
       onPageCard: (page) => _navigateToShowDetailPage(page),
     );
-  }
-
-  /// ページリストの取得が失敗した場合の画面
-  Widget onFetchPageListFailed() {
-    return const Text('データの取得に失敗しました');
-  }
-
-  /// ページリストの取得中の画面
-  Widget onFetchPageListLoading() {
-    return const Text('Now Loading...');
   }
 }
 

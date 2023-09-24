@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_diary/ui/add_page/add_page_body.dart';
 import 'package:image_diary/ui/add_page/add_page_view_model.dart';
+import 'package:image_diary/ui/show_page_list/show_page_list_view_model.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
 /// ページ追加用画面
@@ -66,6 +67,11 @@ class AddPageScreen extends ConsumerWidget {
 
     // ページを登録し、次の画面へ遷移
     await viewModel.addPage();
+
+    // 遷移後のページリストを更新する
+    final showPageListViewModel = ref.read(showPageListViewModelProvider.notifier);
+    await showPageListViewModel.loadPageList();
+
     _destinationAfterWriting();
   }
 }
