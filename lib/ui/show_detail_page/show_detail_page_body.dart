@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -21,8 +22,8 @@ class ShowDetailPageBody extends StatelessWidget {
       child: Center(
         child: Column(
           children: [
-            Image.memory(
-              Uint8List.fromList(_page.image),
+            Image.file(
+              File(_page.imagePath),
               width: double.infinity,
             ),
             const SizedBox(height: 16,),

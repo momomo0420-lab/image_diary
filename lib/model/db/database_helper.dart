@@ -43,8 +43,7 @@ class DatabaseHelper {
         ${PageColumns.title.column} TEXT,
         ${PageColumns.content.column} TEXT,
         ${PageColumns.date.column} INTEGER,
-        ${PageColumns.image.column} BLOB,
-        ${PageColumns.imageName.column} TEXT
+        ${PageColumns.imagePath.column} TEXT
       )
     ''');
   }

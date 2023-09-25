@@ -48,28 +48,16 @@ class AddPageViewModel extends _$AddPageViewModel {
 
   /// ページを登録する
   Future<void> addPage() async {
-    final bytes = await _convertImageToBytes();
+    // final bytes = await _convertImageToBytes();
 
     final page = PageModel(
       title: state.titleController.text,
       content: state.contentController.text,
       date: DateTime.now().millisecondsSinceEpoch,
-      image: bytes,
+      imagePath: state.image?.path ?? "",
     );
 
     final repository = ref.read(pageRepositoryProvider);
     repository.insert(page);
-  }
-
-  /// 画像をバイトデータに変換し、返却する
-  ///
-  /// @return バイトデータに変換した画像
-  Future<List<int>> _convertImageToBytes() async {
-    if(state.image == null) {
-      return [];
-    }
-    final bytes = state.image!.readAsBytes();
-
-    return bytes;
   }
 }

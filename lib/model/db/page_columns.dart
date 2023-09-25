@@ -3,8 +3,7 @@ enum PageColumns {
   title('title'),
   content('content'),
   date('date'),
-  image('image'),
-  imageName('image_name'),
+  imagePath('image_path'),
   ;
 
   final String column;
