@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -57,8 +58,8 @@ class ShowPageListBody extends StatelessWidget {
               onTap: () => _onPageCard(page),
               child: Column(
                 children: [
-                  Image.memory(
-                    Uint8List.fromList(page.image),
+                  Image.file(
+                    File(page.imagePath),
                     height: 200,
                     width: double.infinity,
                     fit: BoxFit.cover,
