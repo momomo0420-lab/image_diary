@@ -51,3 +51,4 @@ app.*.map.json
 /lib/ui/add_page/add_page_view_model_state.freezed.dart
 /lib/ui/show_detail_page/show_detail_page_view_mode_state.freezed.dart
 /lib/ui/show_detail_page/show_detail_page_view_model.g.dart
+/lib/firebase_options.dart
