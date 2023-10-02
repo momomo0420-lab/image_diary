@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_diary/model/db/page_dao.dart';
 
-class PageDaoImplWithCF extends PageDao {
+class PageDaoImplForFirebase extends PageDao {
   static const collectionName = 'page_list';
 
   @override
@@ -19,7 +19,10 @@ class PageDaoImplWithCF extends PageDao {
 
     // ページリストを取得
     final db = FirebaseFirestore.instance;
-    final ref = await db.collection(collectionName).get();
+    final ref = await db
+        .collection(collectionName)
+        .orderBy('date', descending: true)
+        .get();
 
     // QueryDocumentSnapshot形式で取れているためMap形式へ変換
     for(var page in ref.docs) {

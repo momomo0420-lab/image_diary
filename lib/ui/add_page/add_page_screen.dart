@@ -24,14 +24,12 @@ class AddPageScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(title: const Text('日記を書く')),
-      body: LoaderOverlay(
-        child: AddPageBody(
-          titleController: state.titleController,
-          contentController: state.contentController,
-          image: state.image,
-          onImageContainer: () => _onImageContainer(context, ref),
-          onWritingButton: () => _onWritingButton(context, ref),
-        ),
+      body: AddPageBody(
+        titleController: state.titleController,
+        contentController: state.contentController,
+        image: state.image,
+        onImageContainer: () => _onImageContainer(context, ref),
+        onWritingButton: () => _onWritingButton(context, ref),
       ),
     );
   }
@@ -66,10 +64,12 @@ class AddPageScreen extends ConsumerWidget {
     }
 
     // ページを登録し、遷移後のページリストを更新した後、次の画面へ遷移
+    context.loaderOverlay.show();
     await viewModel.addPage();
-
     final showPageListViewModel = ref.read(showPageListViewModelProvider.notifier);
-    await showPageListViewModel.loadPageList();
+    showPageListViewModel.loadPageList();
+    // ignore: use_build_context_synchronously
+    context.loaderOverlay.hide();
 
     _destinationAfterWriting();
   }

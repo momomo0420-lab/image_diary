@@ -48,8 +48,6 @@ class AddPageViewModel extends _$AddPageViewModel {
 
   /// ページを登録する
   Future<void> addPage() async {
-    // final bytes = await _convertImageToBytes();
-
     final page = PageModel(
       title: state.titleController.text,
       content: state.contentController.text,
@@ -58,6 +56,6 @@ class AddPageViewModel extends _$AddPageViewModel {
     );
 
     final repository = ref.read(pageRepositoryProvider);
-    repository.insert(page);
+    await repository.insert(page);
   }
 }
