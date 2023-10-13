@@ -4,7 +4,7 @@ import 'package:image_diary/model/db/image_dao.dart';
 import 'package:image_diary/model/page_model.dart';
 import 'package:image_diary/model/page_repository.dart';
 
-import 'db/page_dao.dart';
+import '../db/page_dao.dart';
 
 class PageRepositoryImplForFirebase extends PageRepository {
   final PageDao _pageDao;

@@ -9,7 +9,7 @@ class ShowPageListScreen extends ConsumerWidget {
   // 詳細画面への遷移
   final Function(PageModel) _navigateToShowDetailPage;
   // ページ追加画面への遷移
-  final Function() _navigateToAddAddPage;
+  final Function() _navigateToAddPage;
 
   ///コンストラクタ
   const ShowPageListScreen({
@@ -17,43 +17,30 @@ class ShowPageListScreen extends ConsumerWidget {
     required navigateToShowDetailPage,
     required navigateToAddPage,
   }): _navigateToShowDetailPage = navigateToShowDetailPage,
-    _navigateToAddAddPage = navigateToAddPage;
+      _navigateToAddPage = navigateToAddPage;
 
   /// メイン
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     debugPrint('ShowPageListScreen: build start');
 
+    final viewModel = ref.read(showPageListViewModelProvider.notifier);
     final state = ref.watch(showPageListViewModelProvider);
 
     return Scaffold(
       appBar: AppBar(title: const Text('画像日記アプリ')),
       backgroundColor: Colors.limeAccent,
-      body: showPageListOrLoading(state.pageList),
+      body: ShowPageListBody(
+        viewModel: viewModel,
+        state: state,
+        onPageCard: (page) => _navigateToShowDetailPage(page),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _navigateToAddAddPage();
+          _navigateToAddPage();
         },
         child: const Icon(Icons.add),
       ),
     );
   }
-
-  /// ページリストの取得に応じた画面表示
-  ///
-  /// @return pageList  ページリスト
-  Widget showPageListOrLoading(
-      List<PageModel>? pageList
-  ) {
-    if(pageList == null) {
-      return const Center(child: Text('Now Loading...'));
-    }
-
-    return ShowPageListBody(
-      pageList: pageList,
-      onPageCard: (page) => _navigateToShowDetailPage(page),
-    );
-  }
 }
-
-

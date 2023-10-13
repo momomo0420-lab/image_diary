@@ -12,17 +12,18 @@ class ShowDetailPageScreen extends ConsumerWidget {
   /// メイン
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // 渡されたページを使用し、ViewModelを作成
+    // 渡されたページを使用し、状態を作成
     final page = ModalRoute.of(context)!.settings.arguments as PageModel;
+    //todo: ここ同じところ参照してるのかね？
     final state = ref.watch(showDetailPageViewModelProvider(page));
+    final viewModel = ref.read(showDetailPageViewModelProvider(page).notifier);
 
     return Scaffold(
       appBar: AppBar(title: const Text('日記の詳細ページ')),
       body: ShowDetailPageBody(
-        page: state.page,
+        viewModel: viewModel,
+        state: state,
       ),
     );
   }
 }
-
-

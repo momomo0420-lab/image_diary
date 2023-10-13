@@ -1,34 +1,25 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:image_diary/ui/add_page/add_page_view_model.dart';
+import 'package:image_diary/ui/add_page/add_page_view_model_state.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 /// ページ追加用スクリーンのメイン
 class AddPageBody extends StatelessWidget {
-  // タイトル入力用のコントローラー
-  final TextEditingController _titleController;
-  // 本文入力用のコントローラー
-  final TextEditingController _contentController;
-  // 画面表示する画像（nullの場合は[ここをタップして写真を選択]を表示）
-  final XFile? _image;
-  // 画像部分が押された場合の処理
-  final Function() _onImageContainer;
-  // [書き込み]ボタンが押された場合の処理
-  final Function() _onWritingButton;
+  final AddPageViewModelState _state;
+  final AddPageViewModel _viewModel;
+  final Function() _navigateToNextScreen;
 
   /// コンストラクタ
   const AddPageBody({
     super.key,
-    required TextEditingController titleController,
-    required TextEditingController contentController,
-    required XFile? image,
-    required Function() onImageContainer,
-    required Function() onWritingButton,
-  }): _titleController = titleController,
-        _contentController = contentController,
-        _image = image,
-        _onImageContainer = onImageContainer,
-        _onWritingButton = onWritingButton;
+    required AddPageViewModel viewModel,
+    required AddPageViewModelState state,
+    required Function() navigateToNextScreen,
+  }): _viewModel = viewModel,
+      _state = state,
+      _navigateToNextScreen = navigateToNextScreen;
 
   /// メイン
   @override
@@ -39,26 +30,26 @@ class AddPageBody extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              _loadImageContainer(),
+              _buildImageContainer(),
               const SizedBox(height: 10),
 
-              _loadTitleTextField(),
+              _buildTitleTextField(),
               const SizedBox(height: 10,),
 
-              _loadContentTextField(),
+              _buildContentTextField(),
               const SizedBox(height: 10,),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   OutlinedButton(
-                      onPressed: () => _contentController.clear(),
+                      onPressed: () => _state.contentController.clear(),
                       child: const Text('本文を消す'),
                   ),
                   const SizedBox(width: 20,),
 
                   ElevatedButton(
-                    onPressed: () => _onWritingButton(),
+                    onPressed: () => _onWritingButton(context),
                     child: const Text('書き込む'),
                   ),
                 ],
@@ -73,14 +64,14 @@ class AddPageBody extends StatelessWidget {
   /// 画像用コンテナを読み込む
   ///
   /// @return 画像用コンテナ
-  Widget _loadImageContainer() {
+  Widget _buildImageContainer() {
     return InkWell(
-      onTap: () => _onImageContainer(),
+      onTap: () => _viewModel.pickImage(),
       child: Container(
         height: 200,
         width: double.infinity,
         color: Colors.grey,
-        child: _loadImageOrText(),
+        child: _buildImageOrText(),
       ),
     );
   }
@@ -89,20 +80,22 @@ class AddPageBody extends StatelessWidget {
   ///
   /// @return 表示する画像がある場合 - 表示する画像データウィジット
   ///         表示する画像が無い場合 - 画像の選択を促す文字列
-  Widget _loadImageOrText() {
+  Widget _buildImageOrText() {
     Widget widget;
 
-    if(_image == null) {
+    final image = _state.image;
+
+    if(image == null) {
       widget = const Center(
-          child: Text('ここをタップして写真を選択',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-            ),
-          )
+        child: Text('ここをタップして写真を選択',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+          ),
+        )
       );
     } else {
-      widget = Image.file(File(_image!.path));
+      widget = Image.file(File(image.path));
     }
     return widget;
   }
@@ -110,21 +103,23 @@ class AddPageBody extends StatelessWidget {
   /// タイトル入力フォームを読み込む
   ///
   /// @return タイトル入力フォーム
-  Widget _loadTitleTextField() {
+  Widget _buildTitleTextField() {
+    final titleController = _state.titleController;
+
     return Row(
       children: [
         Expanded(
           child: TextFormField(
             style: const TextStyle(fontSize: 25),
             textAlign: TextAlign.start,
-            controller: _titleController,
+            controller: titleController,
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
               hintText: '題名',
               border: const OutlineInputBorder(),
               suffixIcon: IconButton(
                 onPressed: () {
-                  _titleController.clear();
+                  titleController.clear();
                 },
                 icon: const Icon(Icons.clear),
               ),
@@ -138,7 +133,9 @@ class AddPageBody extends StatelessWidget {
   /// 本文入力フォームの読み込み
   ///
   /// @return 本文入力フォーム
-  Widget _loadContentTextField() {
+  Widget _buildContentTextField() {
+    final contentController = _state.contentController;
+
     return Row(
       children: [
         Expanded(
@@ -147,7 +144,7 @@ class AddPageBody extends StatelessWidget {
                 fontSize: 25
             ),
             textAlign: TextAlign.start,
-            controller: _contentController,
+            controller: contentController,
             maxLines: 7,
             keyboardType: TextInputType.multiline,
             decoration: const InputDecoration(
@@ -158,5 +155,29 @@ class AddPageBody extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  /// [書き込み]ボタンを押下された際の処理
+  ///
+  /// @param context  コンテキスト
+  Future<void> _onWritingButton(
+    BuildContext context,
+  ) async {
+    // 入力された内容に不備が無いか確認する
+    // 不備がある場合はスナックバーを表示後、情報入力継続
+    if(!_viewModel.hasRequiredData()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('入力されていない項目があります。'))
+      );
+      return;
+    }
+
+    // ページを登録し、遷移後のページリストを更新した後、次の画面へ遷移
+    context.loaderOverlay.show();
+    await _viewModel.addPage();
+    // ignore: use_build_context_synchronously
+    context.loaderOverlay.hide();
+
+    _navigateToNextScreen();
   }
 }

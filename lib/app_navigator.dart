@@ -52,7 +52,7 @@ class AppNavigator extends StatelessWidget {
           // ページ追加用画面
           ImageDiaryScreens.addPage.screen: (BuildContext context) {
             return AddPageScreen(
-              destinationAfterWriting: () => Navigator.of(context).pushNamedAndRemoveUntil(
+              navigateToNextScreen: () => Navigator.of(context).pushNamedAndRemoveUntil(
                 ImageDiaryScreens.start.screen,
                 (_) => false
               )
