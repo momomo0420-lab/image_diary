@@ -29,11 +29,37 @@ class AddPageViewModel extends _$AddPageViewModel {
     state = state.copyWith(image: image);
   }
 
+  /// ページを登録する
+  Future<void> addPage({
+    Function()? onLoading,
+    Function()? onSuccess,
+    Function()? onFailure,
+  }) async {
+    if(!_hasRequiredData()) {
+      if(onFailure != null) onFailure();
+      return;
+    }
+
+    if(onLoading != null) onLoading();
+
+    final page = PageModel(
+      title: state.titleController.text,
+      content: state.contentController.text,
+      date: DateTime.now().millisecondsSinceEpoch,
+      imagePath: state.image?.path ?? "",
+    );
+
+    final repository = ref.read(pageRepositoryProvider);
+    await repository.insert(page);
+
+    if(onSuccess != null) onSuccess();
+  }
+
   /// ページ登録のために必要なデータが揃っているか確認する処理
   ///
   /// @return ture  過不足なく入力されている
   ///         false 入力項目に不備がある
-  bool hasRequiredData() {
+  bool _hasRequiredData() {
     bool result = true;
 
     if((state.titleController.text == "") ||
@@ -46,16 +72,14 @@ class AddPageViewModel extends _$AddPageViewModel {
     return result;
   }
 
-  /// ページを登録する
-  Future<void> addPage() async {
-    final page = PageModel(
-      title: state.titleController.text,
-      content: state.contentController.text,
-      date: DateTime.now().millisecondsSinceEpoch,
-      imagePath: state.image?.path ?? "",
-    );
+  Widget buildImageContainerContent({
+    required Image Function(String path) hasImage,
+    required Widget Function() noImage
+  }) {
+    if(state.image == null) {
+      return noImage();
+    }
 
-    final repository = ref.read(pageRepositoryProvider);
-    await repository.insert(page);
+    return hasImage(state.image!.path);
   }
 }

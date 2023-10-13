@@ -49,7 +49,14 @@ class AddPageBody extends StatelessWidget {
                   const SizedBox(width: 20,),
 
                   ElevatedButton(
-                    onPressed: () => _onWritingButton(context),
+                    onPressed: () => _viewModel.addPage(
+                      onLoading: () => context.loaderOverlay.show(),
+                      onSuccess: () {
+                        context.loaderOverlay.hide();
+                        _navigateToNextScreen();
+                      },
+                      onFailure: () => _showFailureSnackBar(context),
+                    ),
                     child: const Text('書き込む'),
                   ),
                 ],
@@ -71,33 +78,23 @@ class AddPageBody extends StatelessWidget {
         height: 200,
         width: double.infinity,
         color: Colors.grey,
-        child: _buildImageOrText(),
+        child: _viewModel.buildImageContainerContent(
+          hasImage: (path) => Image.file(File(path)),
+          noImage: () => _showRequestingImageSelection(),
+        ),
       ),
     );
   }
 
-  /// コンテキストに表示する内容を読み込む
-  ///
-  /// @return 表示する画像がある場合 - 表示する画像データウィジット
-  ///         表示する画像が無い場合 - 画像の選択を促す文字列
-  Widget _buildImageOrText() {
-    Widget widget;
-
-    final image = _state.image;
-
-    if(image == null) {
-      widget = const Center(
+  Widget _showRequestingImageSelection() {
+    return const Center(
         child: Text('ここをタップして写真を選択',
           style: TextStyle(
             color: Colors.white,
             fontSize: 20,
           ),
         )
-      );
-    } else {
-      widget = Image.file(File(image.path));
-    }
-    return widget;
+    );
   }
 
   /// タイトル入力フォームを読み込む
@@ -157,27 +154,11 @@ class AddPageBody extends StatelessWidget {
     );
   }
 
-  /// [書き込み]ボタンを押下された際の処理
-  ///
-  /// @param context  コンテキスト
-  Future<void> _onWritingButton(
+  void _showFailureSnackBar(
     BuildContext context,
-  ) async {
-    // 入力された内容に不備が無いか確認する
-    // 不備がある場合はスナックバーを表示後、情報入力継続
-    if(!_viewModel.hasRequiredData()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('入力されていない項目があります。'))
-      );
-      return;
-    }
-
-    // ページを登録し、遷移後のページリストを更新した後、次の画面へ遷移
-    context.loaderOverlay.show();
-    await _viewModel.addPage();
-    // ignore: use_build_context_synchronously
-    context.loaderOverlay.hide();
-
-    _navigateToNextScreen();
+  ) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('入力されていない項目があります。'))
+    );
   }
 }
