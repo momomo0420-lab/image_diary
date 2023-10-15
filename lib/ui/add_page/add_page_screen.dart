@@ -27,7 +27,7 @@ class AddPageScreen extends ConsumerWidget {
       body: AddPageBody(
         viewModel: viewModel,
         state: state,
-        navigateToNextScreen: () {
+        onWritingButtonPressed: () {
           final showPageListViewModel = ref.read(showPageListViewModelProvider.notifier);
           showPageListViewModel.loadPageList();
           _navigateToNextScreen();

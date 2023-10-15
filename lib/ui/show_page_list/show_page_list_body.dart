@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_diary/model/page_model.dart';
 import 'package:image_diary/ui/show_page_list/show_page_list_view_model.dart';
 import 'package:image_diary/ui/show_page_list/show_page_list_view_model_state.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 /// 日記ページリスト表示画面のメイン
 class ShowPageListBody extends StatelessWidget {
@@ -25,15 +26,18 @@ class ShowPageListBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if(_state.pageList == null) {
-      _viewModel.loadPageList();
-      return const Center(child: Text('Now Loading...'));
+      _viewModel.loadPageList(
+        onLoading: () => context.loaderOverlay.show(),
+        onSuccess: (_) => context.loaderOverlay.hide(),
+      );
+      return const Placeholder();
     }
 
     // 表示する内容を1件ずつカード化し、リストに保存する
     List<Widget> diaryPageCardList = [];
     for(var page in _state.pageList!) {
       diaryPageCardList.add(
-        _buildDiaryPageCard(page)
+          _buildDiaryCard(page)
       );
     }
 
@@ -49,7 +53,7 @@ class ShowPageListBody extends StatelessWidget {
   ///
   /// @param  日記のページ用データ
   /// @return カード化した日記のページ
-  Widget _buildDiaryPageCard(PageModel page) {
+  Widget _buildDiaryCard(PageModel page) {
     return Padding(
       padding: const EdgeInsets.all(16),
       child: SizedBox(

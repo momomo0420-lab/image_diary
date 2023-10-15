@@ -9,17 +9,17 @@ import 'package:loader_overlay/loader_overlay.dart';
 class AddPageBody extends StatelessWidget {
   final AddPageViewModelState _state;
   final AddPageViewModel _viewModel;
-  final Function() _navigateToNextScreen;
+  final Function() _onWritingButtonPressed;
 
   /// コンストラクタ
   const AddPageBody({
     super.key,
     required AddPageViewModel viewModel,
     required AddPageViewModelState state,
-    required Function() navigateToNextScreen,
+    required Function() onWritingButtonPressed,
   }): _viewModel = viewModel,
       _state = state,
-      _navigateToNextScreen = navigateToNextScreen;
+      _onWritingButtonPressed = onWritingButtonPressed;
 
   /// メイン
   @override
@@ -53,7 +53,7 @@ class AddPageBody extends StatelessWidget {
                       onLoading: () => context.loaderOverlay.show(),
                       onSuccess: () {
                         context.loaderOverlay.hide();
-                        _navigateToNextScreen();
+                        _onWritingButtonPressed();
                       },
                       onFailure: () => _showFailureSnackBar(context),
                     ),

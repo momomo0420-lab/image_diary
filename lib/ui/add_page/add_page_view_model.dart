@@ -73,7 +73,7 @@ class AddPageViewModel extends _$AddPageViewModel {
   }
 
   Widget buildImageContainerContent({
-    required Image Function(String path) hasImage,
+    required Widget Function(String path) hasImage,
     required Widget Function() noImage
   }) {
     if(state.image == null) {
