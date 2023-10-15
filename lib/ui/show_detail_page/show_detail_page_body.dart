@@ -1,8 +1,6 @@
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:image_diary/model/page_model.dart';
 import 'package:image_diary/ui/show_detail_page/show_detail_page_view_mode_state.dart';
 import 'package:image_diary/ui/show_detail_page/show_detail_page_view_model.dart';
 
