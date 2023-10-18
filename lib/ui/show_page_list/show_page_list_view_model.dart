@@ -9,7 +9,7 @@ part 'show_page_list_view_model.g.dart';
 class ShowPageListViewModel extends _$ShowPageListViewModel {
   @override
   ShowPageListViewModelState build() {
-    return const ShowPageListViewModelState(pageList: null);
+    return const ShowPageListViewModelState();
   }
 
   Future<void> loadPageList({
