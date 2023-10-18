@@ -1,32 +1,29 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_diary/model/page_model.dart';
 import 'package:image_diary/ui/show_page_list/show_page_list_view_model.dart';
-import 'package:image_diary/ui/show_page_list/show_page_list_view_model_state.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
 /// 日記ページリスト表示画面のメイン
-class ShowPageListBody extends StatelessWidget {
-  final ShowPageListViewModel _viewModel;
-  final ShowPageListViewModelState _state;
+class ShowPageListBody extends ConsumerWidget {
   final Function(PageModel) _onPageCard;
 
   /// コンストラクタ
   const ShowPageListBody({
     super.key,
-    required ShowPageListViewModel viewModel,
-    required ShowPageListViewModelState state,
     required Function(PageModel page) onPageCard,
-  }): _viewModel = viewModel,
-      _state = state,
-      _onPageCard = onPageCard;
+  }): _onPageCard = onPageCard;
 
   /// メイン
   @override
-  Widget build(BuildContext context) {
-    if(_state.pageList == null) {
-      _viewModel.loadPageList(
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(showPageListViewModelProvider);
+    final viewModel = ref.read(showPageListViewModelProvider.notifier);
+
+    if(state.pageList == null) {
+      viewModel.loadPageList(
         onLoading: () => context.loaderOverlay.show(),
         onSuccess: (_) => context.loaderOverlay.hide(),
       );
@@ -35,7 +32,7 @@ class ShowPageListBody extends StatelessWidget {
 
     // 表示する内容を1件ずつカード化し、リストに保存する
     List<Widget> diaryPageCardList = [];
-    for(var page in _state.pageList!) {
+    for(var page in state.pageList!) {
       diaryPageCardList.add(
           _buildDiaryCard(page)
       );
