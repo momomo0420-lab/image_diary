@@ -16,40 +16,37 @@ class DiaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: SizedBox(
-        height: 280,
-        child: Card(
-          clipBehavior: Clip.antiAlias,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24),
-          ),
-
-          child: InkWell(
-            splashColor: Colors.blue.withAlpha(30),
-            onTap: () {
-              if(_onTap != null) _onTap!(_page);
-            },
-            child: Column(
-              children: [
-                Image.file(
-                  File(_page.imagePath),
-                  height: 200,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Text(
-                    _page.getFormattedDate(),
-                    style: const TextStyle(fontSize: 20),
-                  ),
-                )
-              ],
-            ),
-          )
+    return SizedBox(
+      height: 280,
+      child: Card(
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24),
         ),
+
+        child: InkWell(
+          splashColor: Colors.blue.withAlpha(30),
+          onTap: () {
+            if(_onTap != null) _onTap!(_page);
+          },
+          child: Column(
+            children: [
+              Image.file(
+                File(_page.imagePath),
+                height: 200,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Text(
+                  _page.getFormattedDate(),
+                  style: const TextStyle(fontSize: 20),
+                ),
+              )
+            ],
+          ),
+        )
       ),
     );
   }

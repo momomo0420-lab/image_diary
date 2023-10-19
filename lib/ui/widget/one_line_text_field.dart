@@ -26,7 +26,6 @@ class OneLineTextField extends HookWidget {
     final controller = useTextEditingController(text: _initText);
 
     return TextFormField(
-      // style: const TextStyle(fontSize: 25),
       textAlign: TextAlign.start,
       controller: controller,
       keyboardType: TextInputType.text,

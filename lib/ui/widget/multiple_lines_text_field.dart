@@ -24,7 +24,6 @@ class MultipleLinesTextField extends HookWidget {
     final controller = useTextEditingController(text: _initText);
 
     return TextFormField(
-      // style: const TextStyle(fontSize: 25),
       textAlign: TextAlign.start,
       controller: controller,
       maxLines: 7,

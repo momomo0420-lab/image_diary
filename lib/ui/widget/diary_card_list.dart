@@ -18,9 +18,12 @@ class DiaryCardList extends StatelessWidget {
     // 表示する内容を1件ずつカード化し、リストに保存する
     List<Widget> diaryCardList = [];
     for(var page in _pageList) {
-      final diaryCard = DiaryCard(
-        page: page,
-        onTap: _onPageCard,
+      final diaryCard = Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: DiaryCard(
+          page: page,
+          onTap: _onPageCard,
+        ),
       );
       diaryCardList.add(diaryCard);
     }
