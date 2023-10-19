@@ -9,12 +9,12 @@ import 'package:loader_overlay/loader_overlay.dart';
 
 /// ページ追加用スクリーンのメイン
 class AddPageBody extends ConsumerWidget {
-  final Function() _onWritingButtonPressed;
+  final Function()? _onWritingButtonPressed;
 
   /// コンストラクタ
   const AddPageBody({
     super.key,
-    required Function() onWritingButtonPressed,
+    Function()? onWritingButtonPressed,
   }): _onWritingButtonPressed = onWritingButtonPressed;
 
   /// メイン
@@ -55,7 +55,7 @@ class AddPageBody extends ConsumerWidget {
                 onLoading: () => context.loaderOverlay.show(),
                 onSuccess: () {
                   context.loaderOverlay.hide();
-                  _onWritingButtonPressed();
+                  if(_onWritingButtonPressed != null) _onWritingButtonPressed!();
                 },
               ),
             child: const Text('書き込む'),

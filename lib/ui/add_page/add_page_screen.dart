@@ -6,12 +6,12 @@ import 'package:image_diary/ui/show_page_list/show_page_list_view_model.dart';
 /// ページ追加用画面
 class AddPageScreen extends ConsumerWidget {
   // 書き込み完了後の遷移先
-  final Function() _navigateToNextScreen;
+  final Function()? _navigateToNextScreen;
 
   /// コンストラクタ
   const AddPageScreen({
     super.key,
-    required Function() navigateToNextScreen,
+    Function()? navigateToNextScreen,
   }): _navigateToNextScreen = navigateToNextScreen;
 
   /// メイン
@@ -26,7 +26,7 @@ class AddPageScreen extends ConsumerWidget {
             onWritingButtonPressed: () {
               final showPageListViewModel = ref.read(showPageListViewModelProvider.notifier);
               showPageListViewModel.loadPageList();
-              _navigateToNextScreen();
+              if(_navigateToNextScreen != null) _navigateToNextScreen!();
             },
           ),
         ),
