@@ -14,20 +14,21 @@ class AddPageScreen extends ConsumerWidget {
     required Function() navigateToNextScreen,
   }): _navigateToNextScreen = navigateToNextScreen;
 
-
   /// メイン
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(title: const Text('日記を書く')),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: AddPageBody(
-          onWritingButtonPressed: () {
-            final showPageListViewModel = ref.read(showPageListViewModelProvider.notifier);
-            showPageListViewModel.loadPageList();
-            _navigateToNextScreen();
-          },
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: AddPageBody(
+            onWritingButtonPressed: () {
+              final showPageListViewModel = ref.read(showPageListViewModelProvider.notifier);
+              showPageListViewModel.loadPageList();
+              _navigateToNextScreen();
+            },
+          ),
         ),
       ),
     );

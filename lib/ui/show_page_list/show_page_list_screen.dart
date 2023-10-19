@@ -29,9 +29,7 @@ class ShowPageListScreen extends StatelessWidget {
         onPageCard: (page) => _navigateToShowDetailPage(page),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _navigateToAddPage();
-        },
+        onPressed: () => _navigateToAddPage(),
         child: const Icon(Icons.add),
       ),
     );

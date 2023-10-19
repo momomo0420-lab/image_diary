@@ -22,25 +22,23 @@ class ShowDetailPageBody extends ConsumerWidget {
     final viewModel = ref.read(showDetailPageViewModelProvider(_page).notifier);
 
     return SingleChildScrollView(
-      child: Center(
-        child: Column(
-          children: [
-            Image.file(
-              File(_page.imagePath),
-              width: double.infinity,
-            ),
-            const SizedBox(height: 16,),
+      child: Column(
+        children: [
+          Image.file(
+            File(_page.imagePath),
+            width: double.infinity,
+          ),
+          const SizedBox(height: 16,),
 
-            Text(_page.title, style: const TextStyle(fontSize: 40)),
-            const SizedBox(height: 16,),
+          Text(_page.title, style: const TextStyle(fontSize: 40)),
+          const SizedBox(height: 16,),
 
-            Text(_page.getFormattedDate(), style: const TextStyle(fontSize: 30)),
-            const SizedBox(height: 16,),
+          Text(_page.getFormattedDate(), style: const TextStyle(fontSize: 30)),
+          const SizedBox(height: 16,),
 
-            Text(_page.content, style: const TextStyle(fontSize: 30)),
-            const SizedBox(height: 16,),
-          ],
-        )
+          Text(_page.content, style: const TextStyle(fontSize: 30)),
+          const SizedBox(height: 16,),
+        ],
       ),
     );
   }
