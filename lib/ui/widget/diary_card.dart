@@ -23,6 +23,7 @@ class DiaryCard extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),
         ),
+        elevation: 20.0,
 
         child: InkWell(
           splashColor: Colors.blue.withAlpha(30),

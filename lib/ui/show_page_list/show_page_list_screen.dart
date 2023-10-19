@@ -24,7 +24,6 @@ class ShowPageListScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(title: const Text('画像日記アプリ')),
-      backgroundColor: Colors.limeAccent,
       body: ShowPageListBody(
         onPageCard: _navigateToShowDetailPage,
       ),
