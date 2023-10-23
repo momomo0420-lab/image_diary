@@ -1,9 +1,13 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_diary/model/page_model.dart';
 import 'package:image_diary/ui/show_page_list/show_page_list_body.dart';
+import 'package:image_diary/ui/show_page_list/show_page_list_view_model.dart';
 
 /// 日記のリスト表示画面
-class ShowPageListScreen extends StatelessWidget {
+class ShowPageListScreen extends ConsumerWidget {
   // 詳細画面への遷移
   final Function(PageModel)? _navigateToShowDetailPage;
   // ページ追加画面への遷移
@@ -19,12 +23,15 @@ class ShowPageListScreen extends StatelessWidget {
 
   /// メイン
   @override
-  Widget build(BuildContext context) {
-    debugPrint('ShowPageListScreen: build start');
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(showPageListViewModelProvider);
+    final viewModel = ref.read(showPageListViewModelProvider.notifier);
 
     return Scaffold(
       appBar: AppBar(title: const Text('画像日記アプリ')),
       body: ShowPageListBody(
+        viewModel: viewModel,
+        state: state,
         onPageCard: _navigateToShowDetailPage,
       ),
       floatingActionButton: FloatingActionButton(

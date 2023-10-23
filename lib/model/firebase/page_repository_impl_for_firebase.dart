@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:image_diary/model/db/image_dao.dart';
 import 'package:image_diary/model/page_model.dart';
 import 'package:image_diary/model/page_repository.dart';
+import 'package:path/path.dart';
 
 import '../db/page_dao.dart';
 
@@ -49,6 +50,23 @@ class PageRepositoryImplForFirebase extends PageRepository {
     page = page.copyWith(imagePath: url);
 
     await _pageDao.insert(page.toJson());
+  }
+
+  @override
+  Future<void> delete(PageModel page) async {
+    // final fileName = basename(page.imagePath);
+    // await _imageDao.delete(fileName);
+
+    // final date = page.date;
+    // await _pageDao.deleteBy(date);
+
+    // await Future.delayed(const Duration(seconds: 3));
+  }
+
+  @override
+  Future<void> update(PageModel page) async {
+    await delete(page);
+    await insert(page);
   }
 
 }

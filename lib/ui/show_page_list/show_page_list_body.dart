@@ -1,29 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_diary/model/page_model.dart';
 import 'package:image_diary/ui/show_page_list/show_page_list_view_model.dart';
+import 'package:image_diary/ui/show_page_list/show_page_list_view_model_state.dart';
 import 'package:image_diary/ui/widget/diary_card_list.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 
 /// 日記ページリスト表示画面のメイン
-class ShowPageListBody extends ConsumerWidget {
+class ShowPageListBody extends StatelessWidget {
+  final ShowPageListViewModel _viewModel;
+  final ShowPageListViewModelState _state;
   final Function(PageModel)? _onPageCard;
 
   /// コンストラクタ
   const ShowPageListBody({
     super.key,
+    required ShowPageListViewModel viewModel,
+    required ShowPageListViewModelState state,
     Function(PageModel page)? onPageCard,
-  }): _onPageCard = onPageCard;
+  }): _viewModel = viewModel,
+        _state = state,
+        _onPageCard = onPageCard;
 
   /// メイン
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(showPageListViewModelProvider);
-    final viewModel = ref.read(showPageListViewModelProvider.notifier);
-
-    final pageList = state.pageList;
+  Widget build(BuildContext context) {
+    final pageList = _state.pageList;
     if(pageList == null) {
-      viewModel.loadPageList(
+      _viewModel.loadPageList(
         onLoading: () => context.loaderOverlay.show(),
         onSuccess: (_) => context.loaderOverlay.hide(),
       );

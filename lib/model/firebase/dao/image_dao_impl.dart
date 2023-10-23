@@ -10,13 +10,6 @@ class ImageDaoImpl extends ImageDao {
   static const path = "images/";
   static const baseName = "image_";
 
-
-  @override
-  Future<String> deleteBy(int id) async {
-    // TODO: implement deleteBy
-    throw UnimplementedError();
-  }
-
   /// [url]を基にCloud Storageからローカルへ画像を保存する。
   /// 保存後は保存したローカルパスを返却する。
   @override
@@ -73,4 +66,10 @@ class ImageDaoImpl extends ImageDao {
     throw UnimplementedError();
   }
 
+  @override
+  Future<void> delete(String fileName) async {
+    final storageRef = FirebaseStorage.instance.ref();
+    final imageRef = storageRef.child(path + fileName);
+    await imageRef.delete();
+  }
 }

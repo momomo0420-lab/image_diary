@@ -7,7 +7,7 @@ class PageDaoImpl implements PageDao {
   final dbHelper = DatabaseHelper();
 
   @override
-  Future<void> deleteBy(int id) async {
+  Future<void> deleteBy(int date) async {
     // TODO: implement deleteBy
     throw UnimplementedError();
   }

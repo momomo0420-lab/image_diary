@@ -37,4 +37,16 @@ class PageRepositoryImpl implements PageRepository {
     final map = page.toJson();
     await _dao.insert(map);
   }
+
+  @override
+  Future<void> delete(PageModel page) async {
+    // TODO: implement delete
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> update(PageModel page) async {
+    // TODO: implement update
+    throw UnimplementedError();
+  }
 }
