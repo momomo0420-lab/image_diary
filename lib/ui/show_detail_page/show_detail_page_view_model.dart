@@ -1,5 +1,5 @@
 import 'package:image_diary/app_container.dart';
-import 'package:image_diary/data/page_model.dart';
+import 'package:image_diary/data/local_db/model/page_model.dart';
 import 'package:image_diary/ui/show_detail_page/show_detail_page_view_mode_state.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -50,7 +50,7 @@ class ShowDetailPageViewModel extends _$ShowDetailPageViewModel {
     if(onLoading != null) onLoading();
 
     final repository = ref.read(pageRepositoryProvider);
-    await repository.delete(state.page);
+    await repository.deleteBy(state.page.id!);
 
     if(onSuccess != null) onSuccess();
   }

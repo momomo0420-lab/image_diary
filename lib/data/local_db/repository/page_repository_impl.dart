@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:image_diary/data/local_db/dao/page_dao.dart';
 import 'package:image_diary/data/local_db/repository/page_repository.dart';
-import 'package:image_diary/data/page_model.dart';
+import 'package:image_diary/data/local_db/model/page_model.dart';
 
 /// ページ操作用のリポジトリ
 class PageRepositoryImpl implements PageRepository {
@@ -42,8 +42,8 @@ class PageRepositoryImpl implements PageRepository {
   }
 
   @override
-  Future<void> delete(PageModel page) async {
-    _dao.deleteBy(page.id!);
+  Future<void> deleteBy(int id) async {
+    _dao.deleteBy(id);
   }
 
   @override

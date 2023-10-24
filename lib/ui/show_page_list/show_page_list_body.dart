@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:image_diary/data/page_model.dart';
+import 'package:image_diary/data/local_db/model/page_model.dart';
 import 'package:image_diary/ui/show_page_list/show_page_list_view_model.dart';
 import 'package:image_diary/ui/show_page_list/show_page_list_view_model_state.dart';
 import 'package:image_diary/ui/widget/diary_card_list.dart';

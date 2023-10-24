@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_diary/data/page_model.dart';
+import 'package:image_diary/data/local_db/model/page_model.dart';
 import 'package:image_diary/ui/show_detail_page/show_detail_page_body.dart';
 import 'package:image_diary/ui/show_detail_page/show_detail_page_view_model.dart';
 import 'package:image_diary/ui/show_page_list/show_page_list_view_model.dart';

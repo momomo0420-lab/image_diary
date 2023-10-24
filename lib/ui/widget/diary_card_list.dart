@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:image_diary/data/page_model.dart';
+import 'package:image_diary/data/local_db/model/page_model.dart';
 import 'package:image_diary/ui/widget/diary_card.dart';
 
 class DiaryCardList extends StatelessWidget {

@@ -56,3 +56,5 @@ app.*.map.json
 /macos/firebase_app_id_file.json
 /ios/Runner/GoogleService-Info.plist
 /macos/Runner/GoogleService-Info.plist
+/lib/data/local_db/model/page_model.freezed.dart
+/lib/data/local_db/model/page_model.g.dart
