@@ -57,11 +57,11 @@ class ShowDetailPageScreen extends ConsumerWidget {
       context: context,
       onPositivePressed: (context) {
         viewModel.delete(
-            onLoading: () => context.loaderOverlay.show(),
-            onSuccess: () {
-              context.loaderOverlay.hide();
-              navigateToNextScreen(ref);
-            }
+          onLoading: () => context.loaderOverlay.show(),
+          onSuccess: () {
+            context.loaderOverlay.hide();
+            navigateToNextScreen(ref);
+          },
         );
       },
       onNegativePressed: (context) => Navigator.of(context).pop(),

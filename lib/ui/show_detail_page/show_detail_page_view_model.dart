@@ -24,8 +24,8 @@ class ShowDetailPageViewModel extends _$ShowDetailPageViewModel {
   /// 端末に存在する画像を選択し、取得する。
   Future<void> pickImage() async {
     final image = await ImagePicker().pickImage(
-        source: ImageSource.gallery,
-        imageQuality: 50
+      source: ImageSource.gallery,
+      imageQuality: 50,
     );
 
     state = state.copyWith(image: image);
@@ -60,31 +60,22 @@ class ShowDetailPageViewModel extends _$ShowDetailPageViewModel {
     Function()? onSuccess,
     Function()? onFailure,
   }) async {
-    // if(onLoading != null) onLoading();
-    // await _delete();
-    // await _insert();
-    // if(onSuccess != null) onSuccess();
+    if(onLoading != null) onLoading();
+
+    final newPage = _createNewPage();
+    final repository = ref.read(pageRepositoryProvider);
+    await repository.update(newPage);
+
+    if(onSuccess != null) onSuccess();
   }
 
-  // Future<void> _delete() async {
-  //   final oldPageData = state.page;
-  //   final repo = ref.read(pageRepositoryProvider);
-  //   await repo.delete(oldPageData);
-  // }
-  //
-  // Future<void> _insert() async {
-  //   final title = state.title;
-  //   final content = state.content;
-  //   final image = state.image;
-  //
-  //   final page = PageModel(
-  //     title: (title != '') ? title : state.page.title,
-  //     content: (content != '') ? content : state.page.content,
-  //     date: DateTime.now().millisecondsSinceEpoch,
-  //     imagePath: (image != null) ? image.path : state.page.imagePath,
-  //   );
-  //
-  //   final repository = ref.read(pageRepositoryProvider);
-  //   await repository.insert(page);
-  // }
+  PageModel _createNewPage() {
+    return PageModel(
+      id: state.page.id,
+      title: (state.title != '') ? state.title : state.page.title,
+      content: (state.content != '') ? state.content : state.page.content,
+      date: state.page.date,
+      imagePath: (state.image != null) ? state.image!.path : state.page.imagePath,
+    );
+  }
 }

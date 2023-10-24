@@ -1,5 +1,6 @@
-import 'package:image_diary/model/db/page_dao.dart';
-import 'package:image_diary/model/page_repository.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:image_diary/model/local_db/dao/page_dao.dart';
+import 'package:image_diary/model/local_db/repository/page_repository.dart';
 import 'package:image_diary/model/page_model.dart';
 
 /// ページ操作用のリポジトリ
@@ -13,6 +14,7 @@ class PageRepositoryImpl implements PageRepository {
 
   @override
   Future<List<PageModel>> findAll() async {
+    debugPrint('ImageDiaryApp[PageRepositoryImpl]: findAll - start');
     final maps = await _dao.findAll();
 
     // MapでDAOから取得される為、PageItem（List）に変換する
@@ -23,6 +25,7 @@ class PageRepositoryImpl implements PageRepository {
       pageList.add(page);
     }
 
+    debugPrint('ImageDiaryApp[PageRepositoryImpl]: findAll - end');
     return pageList;
   }
 
@@ -40,13 +43,13 @@ class PageRepositoryImpl implements PageRepository {
 
   @override
   Future<void> delete(PageModel page) async {
-    // TODO: implement delete
-    throw UnimplementedError();
+    _dao.deleteBy(page.id!);
   }
 
   @override
   Future<void> update(PageModel page) async {
-    // TODO: implement update
-    throw UnimplementedError();
+    debugPrint('ImageDiaryApp[PageRepositoryImpl]: update - start');
+    await _dao.update(page.id!, page.toJson());
+    debugPrint('ImageDiaryApp[PageRepositoryImpl]: update - end');
   }
 }

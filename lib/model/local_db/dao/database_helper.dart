@@ -1,4 +1,4 @@
-import 'package:image_diary/model/db/page_columns.dart';
+import 'package:image_diary/model/local_db/dao/page_columns.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 

@@ -1,11 +1,10 @@
 import 'dart:io';
 
-import 'package:image_diary/model/db/image_dao.dart';
+import 'package:image_diary/model/firebase/dao/image_dao.dart';
 import 'package:image_diary/model/page_model.dart';
-import 'package:image_diary/model/page_repository.dart';
-import 'package:path/path.dart';
+import 'package:image_diary/model/local_db/repository/page_repository.dart';
 
-import '../db/page_dao.dart';
+import '../../local_db/dao/page_dao.dart';
 
 class PageRepositoryImplForFirebase extends PageRepository {
   final PageDao _pageDao;
