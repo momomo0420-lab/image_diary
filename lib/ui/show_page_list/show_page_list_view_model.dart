@@ -25,7 +25,5 @@ class ShowPageListViewModel extends _$ShowPageListViewModel {
     if(onSuccess != null) onSuccess(pageList);
   }
 
-  void clearPageList() {
-    state = state.copyWith(pageList: null);
-  }
+  bool hasPageList() => (state.pageList != null);
 }

@@ -31,7 +31,7 @@ class AddPageScreen extends ConsumerWidget {
             state: state,
             onWritingButtonPressed: () {
               final showPageListViewModel = ref.read(showPageListViewModelProvider.notifier);
-              showPageListViewModel.clearPageList();
+              showPageListViewModel.loadPageList();
               if(_navigateToNextScreen != null) _navigateToNextScreen!();
             },
           ),

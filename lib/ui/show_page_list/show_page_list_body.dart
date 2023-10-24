@@ -24,8 +24,7 @@ class ShowPageListBody extends StatelessWidget {
   /// メイン
   @override
   Widget build(BuildContext context) {
-    final pageList = _state.pageList;
-    if(pageList == null) {
+    if(!_viewModel.hasPageList()) {
       _viewModel.loadPageList(
         onLoading: () => context.loaderOverlay.show(),
         onSuccess: (_) => context.loaderOverlay.hide(),
@@ -34,7 +33,7 @@ class ShowPageListBody extends StatelessWidget {
     }
 
     return DiaryCardList(
-      pageList: pageList,
+      pageList: _state.pageList!,
       onPageCard: _onPageCard,
     );
   }

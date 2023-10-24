@@ -98,7 +98,7 @@ class ShowDetailPageScreen extends ConsumerWidget {
 
   void navigateToNextScreen(WidgetRef ref) {
     final showPageListViewModel = ref.read(showPageListViewModelProvider.notifier);
-    showPageListViewModel.clearPageList();
+    showPageListViewModel.loadPageList();
     if(_navigateToNextScreen != null) _navigateToNextScreen!();
   }
 }
