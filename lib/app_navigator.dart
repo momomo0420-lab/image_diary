@@ -46,7 +46,12 @@ class AppNavigator extends StatelessWidget {
 
           // 日記の詳細画面
           ImageDiaryScreens.detailPage.screen: (BuildContext context) {
-            return const ShowDetailPageScreen();
+            return ShowDetailPageScreen(
+              navigateToNextScreen: () => Navigator.of(context).pushNamedAndRemoveUntil(
+                ImageDiaryScreens.start.screen,
+                (_) => false
+              ),
+            );
           },
 
           // ページ追加用画面

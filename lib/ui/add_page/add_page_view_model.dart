@@ -24,8 +24,8 @@ class AddPageViewModel extends _$AddPageViewModel {
   /// 端末に存在する画像を選択し、取得する。
   Future<void> pickImage() async {
     final image = await ImagePicker().pickImage(
-        source: ImageSource.gallery,
-        imageQuality: 50
+      source: ImageSource.gallery,
+      imageQuality: 50,
     );
 
     state = state.copyWith(image: image);

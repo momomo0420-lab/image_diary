@@ -18,27 +18,30 @@ class ImageContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: _onTap,
-      child: Container(
-        height: 200,
-        width: double.infinity,
-        color: Colors.grey,
-        child: _buildImageContainerDetail(),
-      ),
+      child: _buildImageContainerDetail(),
     );
   }
 
   Widget _buildImageContainerDetail() {
     if(_image != null) {
-      return Image.file(File(_image!.path));
+      return Image.file(
+        File(_image!.path),
+        width: double.infinity,
+      );
     }
 
-    return const Center(
+    return Container(
+      height: 200,
+      width: double.infinity,
+      color: Colors.grey,
+      child: const Center(
         child: Text('ここをタップして写真を選択',
           style: TextStyle(
             color: Colors.white,
             fontSize: 20,
           ),
-        )
+        ),
+      ),
     );
   }
 }

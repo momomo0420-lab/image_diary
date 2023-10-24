@@ -1,14 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:image_diary/model/db/page_dao.dart';
+import 'package:image_diary/model/local_db/dao/page_columns.dart';
+import 'package:image_diary/model/local_db/dao/page_dao.dart';
 
 class PageDaoImplForFirebase extends PageDao {
   static const collectionName = 'page_list';
-
-  @override
-  Future<void> deleteBy(int id) async {
-    // TODO: implement deleteBy
-    throw UnimplementedError();
-  }
 
   /// ページリストの取得
   ///
@@ -32,14 +27,32 @@ class PageDaoImplForFirebase extends PageDao {
     return pageList;
   }
 
+  // Future<List<Map<String, dynamic>>> findBy(int date) async {
+  //   List<Map<String, dynamic>> pageList = [];
+  //
+  //   final db = FirebaseFirestore.instance;
+  //
+  // }
+  //
   @override
   Future<void> insert(Map<String, dynamic> page) async {
     final db = FirebaseFirestore.instance;
-    final ref = await db.collection(collectionName).add(page);
+    await db.collection(collectionName).add(page);
   }
 
   @override
-  Future<void> update(Map<String, dynamic> page) async {
+  Future<void> deleteBy(int date) async {
+    final db = FirebaseFirestore.instance;
+    final ref = await db.collection(collectionName)
+        .where(PageColumns.date.column, isEqualTo: date).get();
+
+    for(var page in ref.docs) {
+      await page.reference.delete();
+    }
+  }
+
+  @override
+  Future<void> update(int id, Map<String, dynamic> page) async {
     // TODO: implement update
     throw UnimplementedError();
   }

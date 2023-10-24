@@ -1,45 +1,69 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_diary/model/page_model.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:image_diary/ui/show_detail_page/show_detail_page_view_mode_state.dart';
 import 'package:image_diary/ui/show_detail_page/show_detail_page_view_model.dart';
+import 'package:image_diary/ui/widget/image_container.dart';
+import 'package:image_diary/ui/widget/multiple_lines_text_field.dart';
+import 'package:image_diary/ui/widget/one_line_text_field.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 
 /// 詳細画面のメイン
-class ShowDetailPageBody extends ConsumerWidget {
-  final PageModel _page;
+class ShowDetailPageBody extends HookWidget {
+  final ShowDetailPageViewModel _viewModel;
+  final ShowDetailPageViewModelState _state;
+  final Function()? _onUpdateButtonPressed;
 
   /// コンストラクタ
   const ShowDetailPageBody({
     super.key,
-    required PageModel page,
-  }): _page = page;
+    required ShowDetailPageViewModel viewModel,
+    required ShowDetailPageViewModelState state,
+    Function()? onUpdateButtonPressed,
+  }): _viewModel = viewModel,
+        _state = state,
+        _onUpdateButtonPressed = onUpdateButtonPressed;
 
   /// メイン
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(showDetailPageViewModelProvider(_page));
-    final viewModel = ref.read(showDetailPageViewModelProvider(_page).notifier);
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        ImageContainer(
+          image: (_state.image == null) ? XFile(_state.page.imagePath) : _state.image,
+          onTap: () => _viewModel.pickImage(),
+        ),
+        const SizedBox(height: 16,),
 
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Image.file(
-            File(_page.imagePath),
-            width: double.infinity,
+        OneLineTextField(
+          controller: useTextEditingController(),
+          hint: _state.page.title,
+          onChanged: (title) => _viewModel.setTitle(title),
+          onClear: () => _viewModel.setTitle(''),
+        ),
+        const SizedBox(height: 16,),
+
+        MultipleLinesTextField(
+          controller: useTextEditingController(),
+          hint: _state.page.content,
+          onChanged: (content) => _viewModel.setContent(content),
+        ),
+        const SizedBox(height: 16,),
+
+        Center(
+          child: ElevatedButton(
+            onPressed: !_viewModel.isUpdatable() ? null :
+              () => _viewModel.update(
+                onLoading: () => context.loaderOverlay.show(),
+                onSuccess: () {
+                  context.loaderOverlay.hide();
+                  if(_onUpdateButtonPressed != null) _onUpdateButtonPressed!();
+                }
+              ),
+            child: const Text('更新する'),
           ),
-          const SizedBox(height: 16,),
-
-          Text(_page.title, style: const TextStyle(fontSize: 40)),
-          const SizedBox(height: 16,),
-
-          Text(_page.getFormattedDate(), style: const TextStyle(fontSize: 30)),
-          const SizedBox(height: 16,),
-
-          Text(_page.content, style: const TextStyle(fontSize: 30)),
-          const SizedBox(height: 16,),
-        ],
-      ),
+        )
+      ],
     );
   }
 }

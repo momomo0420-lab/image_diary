@@ -2,20 +2,13 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:image_diary/model/db/image_dao.dart';
+import 'package:image_diary/model/firebase/dao/image_dao.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
 class ImageDaoImpl extends ImageDao {
   static const path = "images/";
   static const baseName = "image_";
-
-
-  @override
-  Future<String> deleteBy(int id) async {
-    // TODO: implement deleteBy
-    throw UnimplementedError();
-  }
 
   /// [url]を基にCloud Storageからローカルへ画像を保存する。
   /// 保存後は保存したローカルパスを返却する。
@@ -49,7 +42,7 @@ class ImageDaoImpl extends ImageDao {
     final storage = FirebaseStorage.instance;
     final imageRef = storage.ref().child("$path$fileName");
     try {
-      final task = await imageRef.putFile(file);
+      await imageRef.putFile(file);
     } on FirebaseException catch (e) {
       debugPrint('ErrorMessage: ${e.message}');
     }
@@ -73,4 +66,10 @@ class ImageDaoImpl extends ImageDao {
     throw UnimplementedError();
   }
 
+  @override
+  Future<void> delete(String fileName) async {
+    final storageRef = FirebaseStorage.instance.ref();
+    final imageRef = storageRef.child(path + fileName);
+    await imageRef.delete();
+  }
 }

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
-class OneLineTextField extends HookWidget {
-  final String? _initText;
+class OneLineTextField extends StatelessWidget {
+  final TextEditingController _controller;
   final String? _label;
   final String? _hint;
   final Function(String)? _onChanged;
@@ -10,12 +9,12 @@ class OneLineTextField extends HookWidget {
 
   const OneLineTextField({
     super.key,
-    String? initText,
+    required TextEditingController controller,
     String? label,
     String? hint,
     Function(String value)? onChanged,
     Function()? onClear,
-  }): _initText = initText,
+  }): _controller = controller,
         _label = label,
         _hint = hint,
         _onChanged = onChanged,
@@ -23,11 +22,9 @@ class OneLineTextField extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = useTextEditingController(text: _initText);
-
     return TextFormField(
       textAlign: TextAlign.start,
-      controller: controller,
+      controller: _controller,
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         labelText: _label,
@@ -35,7 +32,7 @@ class OneLineTextField extends HookWidget {
         border: const OutlineInputBorder(),
         suffixIcon: IconButton(
           onPressed: () {
-            controller.clear();
+            _controller.clear();
             if(_onClear != null) _onClear!();
           },
           icon: const Icon(Icons.clear),
