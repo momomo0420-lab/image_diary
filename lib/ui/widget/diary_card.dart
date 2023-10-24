@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:image_diary/model/page_model.dart';
+import 'package:image_diary/data/page_model.dart';
 
 class DiaryCard extends StatelessWidget {
   final PageModel _page;

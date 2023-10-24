@@ -1,4 +1,4 @@
-import 'package:image_diary/model/page_model.dart';
+import 'package:image_diary/data/page_model.dart';
 
 abstract class PageRepository {
   Future<List<PageModel>> findAll();

@@ -1,8 +1,6 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:image_diary/model/page_model.dart';
+import 'package:image_diary/data/page_model.dart';
 import 'package:image_diary/ui/show_page_list/show_page_list_body.dart';
 import 'package:image_diary/ui/show_page_list/show_page_list_view_model.dart';
 

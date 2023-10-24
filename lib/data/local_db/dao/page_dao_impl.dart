@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import 'package:image_diary/model/local_db/dao/database_helper.dart';
-import 'package:image_diary/model/local_db/dao/page_columns.dart';
-import 'package:image_diary/model/local_db/dao/page_dao.dart';
+import 'package:image_diary/data/local_db/dao/database_helper.dart';
+import 'package:image_diary/data/local_db/dao/page_columns.dart';
+import 'package:image_diary/data/local_db/dao/page_dao.dart';
 import 'package:sqflite/sqflite.dart';
 
 class PageDaoImpl implements PageDao {

@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:image_diary/model/firebase/dao/image_dao.dart';
+import 'package:image_diary/data/firebase/dao/image_dao.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 

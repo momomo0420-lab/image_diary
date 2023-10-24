@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:image_diary/model/local_db/dao/page_columns.dart';
-import 'package:image_diary/model/local_db/dao/page_dao.dart';
+import 'package:image_diary/data/local_db/dao/page_columns.dart';
+import 'package:image_diary/data/local_db/dao/page_dao.dart';
 
 class PageDaoImplForFirebase extends PageDao {
   static const collectionName = 'page_list';

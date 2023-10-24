@@ -1,5 +1,5 @@
 import 'package:image_diary/app_container.dart';
-import 'package:image_diary/model/page_model.dart';
+import 'package:image_diary/data/page_model.dart';
 import 'package:image_diary/ui/add_page/add_page_view_model_state.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
